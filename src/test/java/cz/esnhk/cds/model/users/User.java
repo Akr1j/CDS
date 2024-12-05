@@ -1,7 +1,7 @@
 package cz.esnhk.cds.model.users;
 
 import cz.esnhk.cds.model.cards.ESNcard;
-import cz.esnhk.cds.model.cards.SIMcard;
+import cz.esnhk.cds.model.cards.SIMCard;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,7 +24,7 @@ public abstract class User {
     private String dayJoined;
 
     private ESNcard esnCard;
-    private SIMcard simCard;
+    private SIMCard simCard;
 
 
     public long getId() {
