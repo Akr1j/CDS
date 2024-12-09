@@ -8,6 +8,7 @@
 body {
     display: flex;
     height: 100vh;
+    width: 100vw;
 }
 
 .container {
@@ -16,7 +17,7 @@ body {
 }
 
 .content {
-    width: 80%;
+    width: inherit;
     padding: 1rem;
 }
 

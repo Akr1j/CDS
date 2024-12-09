@@ -1,15 +1,10 @@
-body {
-    width: 100vh;
-    height: 100vh;
-    margin: 0;
-}
-
 menu {
     margin: 0;
     background-color: #d3d3d3;
     width: 20%;
     height: 100%;
     min-width: 10rem;
+    max-width: 15rem;
     list-style-type: none;
     padding: 1rem 0;
 }
