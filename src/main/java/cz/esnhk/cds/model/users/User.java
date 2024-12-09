@@ -1,7 +1,5 @@
 package cz.esnhk.cds.model.users;
 
-import cz.esnhk.cds.model.cards.ESNcard;
-import cz.esnhk.cds.model.cards.SIMCard;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,9 +21,27 @@ public abstract class User {
     private int phone;
     private String dayJoined;
 
-    private ESNcard esnCard;
-    private SIMCard simCard;
+    private boolean esnCard;
+    private boolean simCard;
+    private boolean welcomePack;
 
+    public User(long id, String name, String surname, String middleName, String email, int phone, String dayJoined, boolean esnCard, boolean simCard, boolean welcomePack) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.middleName = middleName;
+        this.email = email;
+        this.phone = phone;
+        this.dayJoined = dayJoined;
+        this.esnCard = esnCard;
+        this.simCard = simCard;
+        this.welcomePack = welcomePack;
+
+    }
+
+    public User() {
+
+    }
 
     public long getId() {
 
@@ -74,5 +90,37 @@ public abstract class User {
 
     public void setPhone(int phone) {
         this.phone = phone;
+    }
+
+    public String getDayJoined() {
+        return dayJoined;
+    }
+
+    public void setDayJoined(String dayJoined) {
+        this.dayJoined = dayJoined;
+    }
+
+    public boolean esnCard() {
+        return esnCard;
+    }
+
+    public void setEsnCard(boolean esnCard) {
+        this.esnCard = esnCard;
+    }
+
+    public boolean simCard() {
+        return simCard;
+    }
+
+    public void setSimCard(boolean simCard) {
+        this.simCard = simCard;
+    }
+
+    public boolean welcomePack() {
+        return welcomePack;
+    }
+
+    public void setWelcomePack(boolean welcomePack) {
+        this.welcomePack = welcomePack;
     }
 }

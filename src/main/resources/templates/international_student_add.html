@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add new Student</title>
+    <link rel="stylesheet" href="menu.css">
+</head>
+<body>
+    <form th:action="@{'/intStudent/add'}" method="post" th:object="${international_student}">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="Cvguvduu" required>
+        <br>
+        <label for="surname">Surname:</label>
+        <input type="text" id="surname" name="surname" value="DHJSBUD" required>
+        <br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="j@j.vz" required>
+        <br>
+        <label for="phone">Phone:</label>
+        <input type="tel" id="phone" name="phone" value="67876" required>
+        <br>
+        <label for="country">Country:</label>
+        <input type="text" id="country" name="country" value="CZ" required>
+        <br>
+        <label for="date_of_birth">Date of birth:</label>
+        <input type="date" id="date_of_birth" name="date_of_birth" required>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

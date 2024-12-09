@@ -1,5 +1,7 @@
 package cz.esnhk.cds.model.users;
 
+import cz.esnhk.cds.model.cards.ESNcard;
+import cz.esnhk.cds.model.cards.SIMCard;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,4 +14,14 @@ public class Member extends User{
     private String section;
     //May be changed to enum / classes
     private String Role;
+
+    public Member() {
+    }
+
+    public Member(long id, String name, String surname, String middleName, String email, int phone, String dayJoined, boolean esnCard, boolean simCard, long id1, String section, String role, boolean welcomePack) {
+        super(id, name, surname, middleName, email, phone, dayJoined, esnCard, simCard, welcomePack);
+        this.id = id1;
+        this.section = section;
+        Role = role;
+    }
 }
