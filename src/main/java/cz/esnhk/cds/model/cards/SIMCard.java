@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class SIMCard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private long id;
 
     private String simCardNumber;
     private String dateOfImport;
