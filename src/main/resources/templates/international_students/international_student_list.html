@@ -62,8 +62,8 @@
                         <td th:text="${student.surname}"></td>
                         <td th:text="${student.country}"></td>
                         <td><input type="checkbox" th:checked="${student.welcomePack}" disabled /></td>
-                        <td><input type="checkbox" th:checked="${student.esnCard}" disabled /></td>
-                        <td><input type="checkbox" th:checked="${student.simCard}" disabled /></td>
+                        <td><input type="checkbox" th:checked="${student.haveValidEsnCard()}" disabled /></td>
+                        <td><input type="checkbox" th:checked="${student.haveValidSimCard()}" disabled /></td>
                         <td><a th:href="'/intStudent/profile/' + ${student.id}">Detail</a></td>
                     </tr>
                 </tbody>

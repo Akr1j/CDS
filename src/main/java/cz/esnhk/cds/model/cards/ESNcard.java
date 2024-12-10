@@ -62,4 +62,8 @@ public class ESNcard {
     public void setCardPrice(int cardPrice) {
         this.cardPrice = cardPrice;
     }
+
+    public boolean isValid() {
+        return true;
+    }
 }

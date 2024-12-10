@@ -18,7 +18,7 @@ public class Member extends User{
     public Member() {
     }
 
-    public Member(long id, String name, String surname, String middleName, String email, int phone, String dayJoined, boolean esnCard, boolean simCard, long id1, String section, String role, boolean welcomePack) {
+    public Member(long id, String name, String surname, String middleName, String email, String phone, String dayJoined, ESNcard esnCard, SIMCard simCard, long id1, String section, String role, boolean welcomePack) {
         super(id, name, surname, middleName, email, phone, dayJoined, esnCard, simCard, welcomePack);
         this.id = id1;
         this.section = section;

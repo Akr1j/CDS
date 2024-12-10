@@ -1,10 +1,11 @@
 package cz.esnhk.cds.model.users;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import cz.esnhk.cds.model.cards.ESNcard;
+import cz.esnhk.cds.model.cards.SIMCard;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+
+import java.util.List;
 
 @MappedSuperclass
 public abstract class User {
@@ -20,14 +21,16 @@ public abstract class User {
     private String middleName;
     @NotBlank
     private String email;
-    private int phone;
+    private String phone;
     private String dayJoined;
 
-    private boolean esnCard;
-    private boolean simCard;
+    @OneToMany(mappedBy = "id")
+    private List<ESNcard> esnCards;
+    @OneToMany(mappedBy = "id")
+    private List<SIMCard> simCards;
     private boolean welcomePack;
 
-    public User(long id, String name, String surname, String middleName, String email, int phone, String dayJoined, boolean esnCard, boolean simCard, boolean welcomePack) {
+    public User(long id, String name, String surname, String middleName, String email, String phone, String dayJoined, ESNcard esnCards, SIMCard simCard, boolean welcomePack) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -35,9 +38,9 @@ public abstract class User {
         this.email = email;
         this.phone = phone;
         this.dayJoined = dayJoined;
-        this.esnCard = esnCard;
-        this.simCard = simCard;
-        this.welcomePack = welcomePack;
+        this.esnCards = null;
+        this.simCards = null;
+        this.welcomePack = false;
 
     }
 
@@ -86,11 +89,11 @@ public abstract class User {
         this.email = email;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
@@ -102,27 +105,47 @@ public abstract class User {
         this.dayJoined = dayJoined;
     }
 
-    public boolean esnCard() {
-        return esnCard;
-    }
-
-    public void setEsnCard(boolean esnCard) {
-        this.esnCard = esnCard;
-    }
-
-    public boolean simCard() {
-        return simCard;
-    }
-
-    public void setSimCard(boolean simCard) {
-        this.simCard = simCard;
-    }
-
     public boolean welcomePack() {
         return welcomePack;
     }
 
     public void setWelcomePack(boolean welcomePack) {
         this.welcomePack = welcomePack;
+    }
+
+    public List<ESNcard> getEsnCards() {
+        return esnCards;
+    }
+
+    public void setEsnCards(List<ESNcard> esnCards) {
+        this.esnCards = esnCards;
+    }
+
+    public List<SIMCard> getSimCards() {
+        return simCards;
+    }
+
+    public void setSimCards(List<SIMCard> simCards) {
+        this.simCards = simCards;
+    }
+
+    public boolean haveValidEsnCard() {
+        if (esnCards != null)
+            return false;
+        for (ESNcard esnCard : esnCards) {
+            if (esnCard.isValid())
+                return true;
+        }
+        return false;
+    }
+
+    public boolean haveValidSimCard() {
+        if (simCards != null)
+            return false;
+        for (SIMCard simCard : simCards) {
+            if (simCard.isValid())
+                return true;
+        }
+        return false;
     }
 }

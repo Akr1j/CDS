@@ -12,4 +12,8 @@ public class SIMCard {
     private String simCardNumber;
     private String dateOfImport;
     private String dateOfIssue;
+
+    public boolean isValid() {
+        return true;
+    }
 }
