@@ -3,8 +3,10 @@ package cz.esnhk.cds.model.users;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
 import jakarta.validation.constraints.NotBlank;
 
+@MappedSuperclass
 public abstract class User {
 
     @Id
