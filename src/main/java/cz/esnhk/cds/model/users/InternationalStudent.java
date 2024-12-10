@@ -20,6 +20,7 @@ public class InternationalStudent{
     private String email;
     private int phone;
     private String dayJoined;
+    private String aboutMe;
 
     private boolean esnCard;
     private boolean simCard;
@@ -28,7 +29,7 @@ public class InternationalStudent{
     private String country;
 
 
-    public InternationalStudent(long id, String name, String surname, String middleName, String email, int phone, String dayJoined, boolean esnCard, boolean simCard, boolean welcomePack, String country) {
+    public InternationalStudent(long id, String name, String surname, String middleName, String email, int phone, String dayJoined, boolean esnCard, boolean simCard, boolean welcomePack, String country, String aboutMe) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -40,6 +41,7 @@ public class InternationalStudent{
         this.simCard = simCard;
         this.welcomePack = welcomePack;
         this.country = country;
+        this.aboutMe = aboutMe;
     }
 
     public InternationalStudent() {
@@ -132,5 +134,13 @@ public class InternationalStudent{
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public String getAboutMe() {
+        return aboutMe;
+    }
+
+    public void setAboutMe(String aboutMe) {
+        this.aboutMe = aboutMe;
     }
 }

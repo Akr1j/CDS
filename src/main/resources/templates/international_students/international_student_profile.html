@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/styles.css}">
+    <link rel="stylesheet" th:href="@{/menu.css}">
+    <link rel="stylesheet" th:href="@{/main.css}">
+    <title>Student Profile</title>
+</head>
+<body>
+<div class="container">
+    <menu>
+        <li>
+            <h1>International students</h1>
+        </li>
+        <li>
+            <h1>Members</h1>
+        </li>
+        <li>
+            <h1>ESNcards</h1>
+        </li>
+        <li>
+            <h1>SIM cards</h1>
+        </li>
+        <li>
+            <h1>Welcome packs</h1>
+        </li>
+        <li>
+            <h1>Statistic</h1>
+        </li>
+        <li>
+            <h1>Administration</h1>
+        </li>
+    </menu>
+    <main class="content">
+        <div class="profile-header">
+            <button class="close-btn">X</button>
+        </div>
+        <div class="profile-content">
+            <div class="profile-picture">
+                <div class="circle"></div>
+            </div>
+            <div class="profile-info">
+                <p>Name: <span th:text="${student.name}">Jiří Jandourek</span></p>
+                <p>Country: <span th:text="${student.country}">Czech Republic</span></p>
+                <p>Email: <span th:text="${student.email}">jiri@example.com</span></p>
+                <p>Phone number: <span th:text="${student.phone}">+787 789565787</span></p>
+            </div>
+            <div class="profile-about">
+                <h4>About me:</h4>
+                <p th:text="${student.aboutMe}"></p>
+                <!--<p>Assigned buddy: <span th:text="${student.buddy}">Jiří Jandourek</span></p>-->
+            </div>
+            <div class="profile-details">
+                <!--
+                <p>ESNcard</p>
+                <p>Number: <span th:text="${student.esnCardNumber}">---768HJK989</span></p>
+                <p>Status: <span th:text="${student.esnCardStatus}">Registered</span></p>
+                <p>SIMcard</p>
+                <p>Number: <span th:text="${student.simCardNumber}">+4205474242555</span></p>
+                -->
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>
