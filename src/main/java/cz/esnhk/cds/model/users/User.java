@@ -24,9 +24,9 @@ public abstract class User {
     private String phone;
     private String dayJoined;
 
-    @OneToMany(mappedBy = "id")
+    @OneToMany
     private List<ESNcard> esnCards;
-    @OneToMany(mappedBy = "id")
+    @OneToMany
     private List<SIMCard> simCards;
     private boolean welcomePack;
 

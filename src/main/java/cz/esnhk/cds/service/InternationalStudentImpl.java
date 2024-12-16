@@ -38,13 +38,10 @@ public class InternationalStudentImpl implements InternationalStudentService {
     @Override
     public void addESNcard(long id, ESNcard esnCard) {
         InternationalStudent internationalStudent = internationalStudentRepository.findById(id).orElse(null);
-        ESNcard esNcard1 = new ESNcard(esnCard.getCardNumber(), esnCard.getDateOfImport(), esnCard.getDateOfIssue(), esnCard.getCardPrice());
         if (internationalStudent != null) {
-            ESNCardRepository.save(esNcard1);
-            internationalStudent.addESNcard(esNcard1);
+            ESNCardRepository.save(esnCard);
+            internationalStudent.addESNcard(esnCard);
             internationalStudentRepository.save(internationalStudent);
         }
-        internationalStudent = internationalStudentRepository.findById(id).orElse(null);
-        System.out.println("International student: " + internationalStudent);
     }
 }

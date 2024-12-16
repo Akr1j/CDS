@@ -1,5 +1,7 @@
 package cz.esnhk.cds.model.cards;
 
+import cz.esnhk.cds.model.users.InternationalStudent;
+import cz.esnhk.cds.model.users.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
@@ -8,6 +10,7 @@ import jakarta.validation.constraints.NotBlank;
 public class ESNcard {
 
     private enum CardStatusType {ACTIVE, INACTIVE};
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -18,6 +21,10 @@ public class ESNcard {
     private String dateOfIssue;
     private int cardPrice;
     private CardStatusType cardStatus;
+
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private InternationalStudent ownerId;
 
     public ESNcard() {
     }
