@@ -1,6 +1,6 @@
 # CIPISEK
 
-**CIPISEK**: Centralized International Platform for Integrated Student Exchange Kits  
+**CIPISEK**: Centralized Integrated Platform for International Student Exchange Kits  
 A modern solution for managing and distributing cards (SIM cards, ESNcards) and Welcome Packs for international students and ESN members.
 
 ## Features
