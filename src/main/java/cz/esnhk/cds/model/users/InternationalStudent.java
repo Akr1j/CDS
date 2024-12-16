@@ -37,4 +37,14 @@ public class InternationalStudent extends User {
     public void setAboutMe(String aboutMe) {
         this.aboutMe = aboutMe;
     }
+
+    @Override
+    public String toString() {
+        return "InternationalStudent{" +
+                "country='" + country + '\'' +
+                ", aboutMe='" + aboutMe + '\'' +
+                '}'
+                + super.toString();
+    }
+
 }

@@ -1,5 +1,6 @@
 package cz.esnhk.cds.service;
 
+import cz.esnhk.cds.model.cards.ESNcard;
 import cz.esnhk.cds.model.users.InternationalStudent;
 import org.springframework.stereotype.Service;
 
@@ -10,4 +11,5 @@ public interface InternationalStudentService {
     List<InternationalStudent> getAllInternationalStudents();
     InternationalStudent getInternationalStudentById(long id);
     void addInternationalStudent(InternationalStudent internationalStudent);
+    void addESNcard(long id, ESNcard cardNumber);
 }

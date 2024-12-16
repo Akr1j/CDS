@@ -1,5 +1,6 @@
 package cz.esnhk.cds.controller;
 
+import cz.esnhk.cds.model.cards.ESNcard;
 import cz.esnhk.cds.model.users.InternationalStudent;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,5 +44,27 @@ public class InternationalStudentsController {
             return "international_students/international_student_profile";
         }
         return "redirect:/";
+    }
+
+    @GetMapping("intStudent/profile/{id}/addESNcard/")
+    public String addESNcard(Model model, @PathVariable long id) {
+        InternationalStudent internationalStudent = internationalStudentService.getInternationalStudentById(id);
+        ESNcard esnCard = new ESNcard();
+        if (internationalStudent != null) {
+            model.addAttribute("student", internationalStudent);
+            model.addAttribute("esnCard", esnCard);
+            return "international_students/international_student_add_esn_card";
+        }
+        return "redirect:/";
+    }
+
+    @PostMapping("intStudent/profile/{id}/addESNcard/")
+    public String addESNcard(@ModelAttribute ESNcard esnCard, @PathVariable long id) {
+        InternationalStudent internationalStudent = internationalStudentService.getInternationalStudentById(id);
+        if (internationalStudent != null) {
+            internationalStudentService.addESNcard(id, esnCard);
+            return "redirect:/intStudent/profile/" + id;
+        }
+        return "redirect:/501";
     }
 }

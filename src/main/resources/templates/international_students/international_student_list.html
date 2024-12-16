@@ -58,7 +58,7 @@
                 </thead>
                 <tbody>
                     <tr th:each="student : ${international_students}">
-                        <td th:text="${student.getName()}"></td>
+                        <td th:text="${student.name}"></td>
                         <td th:text="${student.surname}"></td>
                         <td th:text="${student.country}"></td>
                         <td><input type="checkbox" th:checked="${student.welcomePack}" disabled /></td>

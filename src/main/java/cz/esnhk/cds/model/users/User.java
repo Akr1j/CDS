@@ -117,10 +117,6 @@ public abstract class User {
         return esnCards;
     }
 
-    public void setEsnCards(List<ESNcard> esnCards) {
-        this.esnCards = esnCards;
-    }
-
     public List<SIMCard> getSimCards() {
         return simCards;
     }
@@ -147,5 +143,25 @@ public abstract class User {
                 return true;
         }
         return false;
+    }
+
+    public void addESNcard(ESNcard esnCard) {
+        esnCards.add(esnCard);
+
+    }
+
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", dayJoined='" + dayJoined + '\'' +
+                ", esnCards=" + esnCards +
+                ", simCards=" + simCards +
+                ", welcomePack=" + welcomePack +
+                '}';
     }
 }

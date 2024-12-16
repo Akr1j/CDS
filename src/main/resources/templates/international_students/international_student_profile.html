@@ -52,15 +52,21 @@
                 <p th:text="${student.aboutMe}"></p>
                 <!--<p>Assigned buddy: <span th:text="${student.buddy}">Jiří Jandourek</span></p>-->
             </div>
-            <div class="profile-details">
-                <!--
+            <!--<div class="profile-details">
                 <p>ESNcard</p>
                 <p>Number: <span th:text="${student.esnCardNumber}">---768HJK989</span></p>
                 <p>Status: <span th:text="${student.esnCardStatus}">Registered</span></p>
                 <p>SIMcard</p>
                 <p>Number: <span th:text="${student.simCardNumber}">+4205474242555</span></p>
-                -->
-            </div>
+            </div>-->
+            <section>
+                <a th:href=" ${student.id} + '/addESNcard/'">Add card</a>
+                <section th:each="esnCard : ${student.esnCards}">
+                    <h2>ESNcard</h2>
+                    <p>Number: <span th:text="${esnCard.cardNumber}">---768HJK989</span></p>
+                    <p>Status: <span th:text="${esnCard.cardStatus}">Registered</span></p>
+                </section>
+            </section>
         </div>
     </main>
 </div>
