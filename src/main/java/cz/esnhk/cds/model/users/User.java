@@ -126,7 +126,7 @@ public abstract class User {
     }
 
     public boolean haveValidEsnCard() {
-        if (esnCards != null)
+        if (esnCards == null)
             return false;
         for (ESNcard esnCard : esnCards) {
             if (esnCard.isValid())
@@ -136,7 +136,7 @@ public abstract class User {
     }
 
     public boolean haveValidSimCard() {
-        if (simCards != null)
+        if (simCards == null)
             return false;
         for (SIMCard simCard : simCards) {
             if (simCard.isValid())
