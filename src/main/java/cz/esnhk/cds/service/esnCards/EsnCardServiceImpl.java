@@ -40,4 +40,24 @@ public class EsnCardServiceImpl implements EsnCardService {
     public void issueEsnCard(long id) {
         //TODO
     }
+
+    @Override
+    public List<ESNcard> getEsnCardsByDateOfImport(String date) {
+        return esNcardRepository.findByDateOfImport(date);
+    }
+
+    @Override
+    public List<ESNcard> getEsnCardsByDateOfIssue(String date) {
+        return esNcardRepository.findByDateOfIssue(date);
+    }
+
+    @Override
+    public List<ESNcard> getESNCardsByDateOfIssueMembers(String date) {
+        return esNcardRepository.countESNCardsForMembersByDate(date);
+    }
+
+    @Override
+    public List<ESNcard> getESNCardsByDateOfIssueInternationalStudents(String date) {
+        return esNcardRepository.countESNCardsForInternationalStudentsByDate(date);
+    }
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/ESNcards/")
@@ -23,10 +24,21 @@ public class EsnCardsManagementController {
 
     @RequestMapping("/")
     public String list(Model model) {
+        Status status = new Status();
+        status.setAvailableCards(esnCardService.getAllEsnCards().size());
+        String formatedTodayDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+        List<ESNcard> todayIssued = esnCardService.getEsnCardsByDateOfIssue(formatedTodayDate);
+        status.setIssuedToday(todayIssued.size());
+        status.setInternationalStudents(esnCardService.getESNCardsByDateOfIssueInternationalStudents(formatedTodayDate).size());
+        status.setMembers(esnCardService.getESNCardsByDateOfIssueMembers(formatedTodayDate).size());
+
+        //TODO: update dynamically
+        status.todayIncome = todayIssued.size() * 400;
+
         model.addAttribute("esn_cards", esnCardService.getAllEsnCards());
         model.addAttribute("currentSemester", "2025/2025");
         model.addAttribute("semester", "2025/2025");
-        model.addAttribute("stats", new Status());
+        model.addAttribute("stats", status);
         model.addAttribute("semesters", new String[]{"2021/2022", "2022/2023", "2023/2024", "2024/2025"});
         return "esn_cards/esn_cards_list";
     }
@@ -75,14 +87,18 @@ public class EsnCardsManagementController {
     }
 
     private static class Status {
-        private int issuedToday = 1;
-        private int todayIncome = 400;
-        private int internationalStudents = 1;
-        private int members = 0;
-        private int availableCards = 224;
+        private int todayIncome;
+        private int issuedToday;
+        private int internationalStudents;
+        private int members;
+        private int availableCards;
 
         public int getIssuedToday() {
             return issuedToday;
+        }
+
+        public void setIssuedToday(int issuedToday) {
+            this.issuedToday = issuedToday;
         }
 
         public int getTodayIncome() {
@@ -99,6 +115,18 @@ public class EsnCardsManagementController {
 
         public int getAvailableCards() {
             return availableCards;
+        }
+
+        public void setAvailableCards(int availableCards) {
+            this.availableCards = availableCards;
+        }
+
+        public void setInternationalStudents(int internationalStudents) {
+            this.internationalStudents = internationalStudents;
+        }
+
+        public void setMembers(int members) {
+            this.members = members;
         }
     }
 }

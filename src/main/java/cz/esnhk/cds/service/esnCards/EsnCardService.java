@@ -12,4 +12,9 @@ public interface EsnCardService {
     void addEsnCard(ESNcard esnCard);
     void editEsnCard(long id, ESNcard esnCard);
     void issueEsnCard(long id);
+    List<ESNcard> getEsnCardsByDateOfImport(String date);
+    List<ESNcard> getEsnCardsByDateOfIssue(String date);
+
+    List<ESNcard> getESNCardsByDateOfIssueInternationalStudents(String date);
+    List<ESNcard> getESNCardsByDateOfIssueMembers(String date);
 }
