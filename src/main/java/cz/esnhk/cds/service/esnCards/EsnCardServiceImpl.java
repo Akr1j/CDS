@@ -1,5 +1,6 @@
 package cz.esnhk.cds.service.esnCards;
 
+import cz.esnhk.cds.model.cards.CardStatusType;
 import cz.esnhk.cds.model.cards.ESNcard;
 import cz.esnhk.cds.repository.ESNCardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,18 @@ public class EsnCardServiceImpl implements EsnCardService {
     }
 
     @Override
+    public List<ESNcard> getAvailableEsnCards() {
+        return esNcardRepository.findByCardStatus(CardStatusType.AVAILABLE);
+    }
+
+    @Override
     public ESNcard getEsnCardByCardNumber(String cardNumber) {
         return esNcardRepository.findByCardNumber(cardNumber);
+    }
+
+    @Override
+    public ESNcard getEsnCardById(long id) {
+        return esNcardRepository.findById(id).orElse(null);
     }
 
     @Override

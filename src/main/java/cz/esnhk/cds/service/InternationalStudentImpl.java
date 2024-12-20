@@ -37,10 +37,12 @@ public class InternationalStudentImpl implements InternationalStudentService {
 
     @Override
     public void addESNcard(long id, ESNcard esnCard) {
+        //REFACTOR: cards already taken from database IDK if this is necessary
         InternationalStudent internationalStudent = internationalStudentRepository.findById(id).orElse(null);
-        if (internationalStudent != null) {
-            ESNCardRepository.save(esnCard);
-            internationalStudent.addESNcard(esnCard);
+        ESNcard esnCard1 = ESNCardRepository.findById(esnCard.getId()).orElse(null);
+        if (internationalStudent != null && esnCard1 != null) {
+            internationalStudent.addESNcard(esnCard1);
+            ESNCardRepository.save(esnCard1);
             internationalStudentRepository.save(internationalStudent);
         }
     }

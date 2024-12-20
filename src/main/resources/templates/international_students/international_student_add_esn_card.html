@@ -1,32 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Add ESNcard</title>
-    <link rel="stylesheet" href="/menu.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/esncards-list.css">
+    <title>Add New ESN Card</title>
 </head>
 <body>
-    <form th:action="@{'/intStudent/profile/{id}/addESNcard/' (id=${student.id})}" method="post" th:object="${esnCard}">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" value="Cvguvduu" required>
-        <br>
-        <label for="surname">Surname:</label>
-        <input type="text" id="surname" name="surname" value="DHJSBUD" required>
+<div class="container">
+    <aside class="sidebar">
+        <ul>
+            <li>International Students</li>
+            <li>Members</li>
+            <li th:classappend="${'active'}">ESNcards</li>
+            <li>SIM cards</li>
+            <li>Welcome Packs</li>
+            <li>Statistic</li>
+            <li>Administration</li>
+        </ul>
+    </aside>
+    <main class="content">
+        <div class="header">
+            <h1>Add New ESN Card</h1>
+        </div>
+        <form th:action="@{'/intStudent/profile/{id}/assignESNcard/' (id=${student.id})}" method="post">
+            <div class="table">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Card Number</th>
+                        <th>Availability</th>
+                        <th>Date of Import</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="card : ${esnCards}">
+                        <td th:text="${card.cardNumber}"></td>
+                        <td th:text="${card.cardStatus}"></td>
+                        <td th:text="${card.dateOfImport}"></td>
+                        <td>
+                            <form th:action="@{'/intStudent/profile/{id}/assignESNcard/' (id=${student.id}, esnCardId=${card.id})}"
+                                  method="post">
+                                <input type="hidden" name="esnCardId" th:value="${card.id}"/>
+                                <button type="submit" class="btn-submit">Add Card</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </form>
 
-        <br>
-        <label for="cardNumber">Card Number:</label>
-        <input type="text" id="cardNumber" name="cardNumber" value="123456789" required>
-        <br>
-        <label for="dateOfImport">Date of Import:</label>
-        <input type="date" id="dateOfImport" name="dateOfImport" value="2021-01-01" required>
-        <br>
-        <label for="dateOfIssue">Date of Issue:</label>
-        <input type="date" id="dateOfIssue" name="dateOfIssue" value="2021-01-01" required>
-        <br>
-        <label for="cardPrice">Card Price:</label>
-        <input type="number" id="cardPrice" name="cardPrice" value="10" required>
-        <br>
-        <button type="submit">Submit</button>
-    </form>
+    </main>
+</div>
 </body>
 </html>
