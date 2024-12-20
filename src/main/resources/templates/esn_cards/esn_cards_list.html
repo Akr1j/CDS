@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/esncards-list.css">
+    <title>ESN Cards Management</title>
+</head>
+<body>
+<div class="container">
+    <aside class="sidebar">
+        <ul>
+            <li >International Students</li>
+            <li>Members</li>
+            <li th:classappend="${'active'}">ESNcards</li>
+            <li >SIM cards</li>
+            <li >Welcome Packs</li>
+            <li >Statistic</li>
+            <li >Administration</li>
+        </ul>
+    </aside>
+    <main class="content">
+        <div class="header">
+            <div class="semester">
+                <label for="semester">Semester:</label>
+                <select id="semester" name="semester" th:field="*{semester}">
+                    <option th:each="semester : ${semesters}" th:value="${semester}" th:text="${semester}"
+                            th:selected="${semester == currentSemester}">2024/2025 Winter semester</option>
+                </select>
+            </div>
+            <div class="availability">
+                <label for="availability">Availability:</label>
+                <select id="availability" name="availability">
+                    <option value="all">All</option>
+                    <option value="available">Available</option>
+                    <option value="issued">Issued</option>
+                    <option value="registered">Registered</option>
+                </select>
+            </div>
+        </div>
+        <div class="table">
+            <table>
+                <thead>
+                <tr>
+                    <th>Card Number</th>
+                    <th>Availability</th>
+                    <th>Date of Import</th>
+                    <th>Issue Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="card : ${esn_cards}">
+                    <td th:text="${card.cardNumber}">---X78HH78</td>
+                    <td th:text="${card.cardStatus}">Available</td>
+                    <td th:text="${card.dateOfImport}">30/11/2024</td>
+                    <td th:text="${card.dateOfIssue ?: '-'}">-</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="statistics">
+            <div class="stat-item">
+                <p>Cards available</p>
+                <span th:text="${stats.availableCards}">224</span>
+            </div>
+            <div class="stat-item">
+                <p>Issued Today</p>
+                <span th:text="${stats.issuedToday}">2</span>
+            </div>
+            <div class="stat-item">
+                <p>Today income</p>
+                <span th:text="${stats.todayIncome}">800,-</span>
+            </div>
+            <div class="stat-item">
+                <p>International Students</p>
+                <span th:text="${stats.internationalStudents}">80</span>
+            </div>
+            <div class="stat-item">
+                <p>Members</p>
+                <span th:text="${stats.members}">14</span>
+            </div>
+        </div>
+        <div class="actions">
+            <button th:onclick="">Add new ESNcard</button>
+            <button th:onclick="">Add multiple ESNcards</button>
+        </div>
+    </main>
+</div>
+</body>
+</html>
