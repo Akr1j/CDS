@@ -11,13 +11,13 @@
 <body>
 <div class="container">
     <menu>
-        <li>
+        <li onclick="window.location.href='/'">
             <h1>International students</h1>
         </li>
         <li>
             <h1>Members</h1>
         </li>
-        <li>
+        <li onclick="window.location.href='/ESNcards/'">
             <h1>ESNcards</h1>
         </li>
         <li>
@@ -44,7 +44,9 @@
                         <div class="circle"></div>
                     </div>
                     <div class="profile-info">
-                        <p>Name: <span th:text="${student.name}"></span> <span th:if="${student.middleName != null}" th:text="${student.name}"></span> <span th:text="${student.surname}"></span></p>
+                        <p>Name: <span th:text="${student.name}"></span> <span th:if="${student.middleName != null}"
+                                                                               th:text="${student.name}"></span> <span
+                                th:text="${student.surname}"></span></p>
                         <p>Email: <span th:text="${student.email}"></span></p>
                         <p>Phone number: <span th:text="${student.phone}"></span></p>
                         <p>Country: <span th:text="${student.country}"></span></p>
