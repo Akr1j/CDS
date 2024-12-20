@@ -10,13 +10,13 @@
 <div class="container">
     <aside class="sidebar">
         <ul>
-            <li >International Students</li>
+            <li>International Students</li>
             <li>Members</li>
             <li th:classappend="${'active'}">ESNcards</li>
-            <li >SIM cards</li>
-            <li >Welcome Packs</li>
-            <li >Statistic</li>
-            <li >Administration</li>
+            <li>SIM cards</li>
+            <li>Welcome Packs</li>
+            <li>Statistic</li>
+            <li>Administration</li>
         </ul>
     </aside>
     <main class="content">
@@ -25,7 +25,8 @@
                 <label for="semester">Semester:</label>
                 <select id="semester" name="semester" th:field="*{semester}">
                     <option th:each="semester : ${semesters}" th:value="${semester}" th:text="${semester}"
-                            th:selected="${semester == currentSemester}">2024/2025 Winter semester</option>
+                            th:selected="${semester == currentSemester}">2024/2025 Winter semester
+                    </option>
                 </select>
             </div>
             <div class="availability">
@@ -50,9 +51,9 @@
                 </thead>
                 <tbody>
                 <tr th:each="card : ${esn_cards}">
-                    <td th:text="${card.cardNumber}">---X78HH78</td>
-                    <td th:text="${card.cardStatus}">Available</td>
-                    <td th:text="${card.dateOfImport}">30/11/2024</td>
+                    <td th:text="${card.cardNumber}"></td>
+                    <td th:text="${card.cardStatus}"></td>
+                    <td th:text="${card.dateOfImport}"></td>
                     <td th:text="${card.dateOfIssue ?: '-'}">-</td>
                 </tr>
                 </tbody>
@@ -81,7 +82,7 @@
             </div>
         </div>
         <div class="actions">
-            <button th:onclick="">Add new ESNcard</button>
+            <button onclick="window.location.href='/ESNcards/add'">Add new ESNcard</button>
             <button th:onclick="">Add multiple ESNcards</button>
         </div>
     </main>

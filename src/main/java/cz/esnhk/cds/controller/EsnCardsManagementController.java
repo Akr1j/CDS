@@ -8,37 +8,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @Controller
 @RequestMapping("/ESNcards/")
 public class EsnCardsManagementController {
-
-    private static class Status{
-        private int issuedToday = 1;
-        private int todayIncome = 400;
-        private int internationalStudents = 1;
-        private int members = 0;
-        private int availableCards = 224;
-
-        public int getIssuedToday() {
-            return issuedToday;
-        }
-
-        public int getTodayIncome() {
-            return todayIncome;
-        }
-
-        public int getInternationalStudents() {
-            return internationalStudents;
-        }
-
-        public int getMembers() {
-            return members;
-        }
-
-        public int getAvailableCards() {
-            return availableCards;
-        }
-    }
 
     private EsnCardService esnCardService;
 
@@ -64,8 +39,24 @@ public class EsnCardsManagementController {
     }
 
     @RequestMapping("/add")
-    public String add() {
-        return "esn_cards/esn_card_add";
+    public String add(Model model) {
+        model.addAttribute("newCard", new ESNcard());
+        return "esn_cards/esn_card-add";
+    }
+
+    @PostMapping("/add")
+    public String add(@ModelAttribute ESNcard newCard) {
+        if (esnCardService.getEsnCardByCardNumber(newCard.getCardNumber()) != null) {
+            //TODO: error message
+            System.out.println("Card is already in database");
+            return "redirect:/ESNcards/";
+        }
+
+        String formatedTodayDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+        //TODO: check if card number is valid / not used - ESN International
+        ESNcard normalisedCard = new ESNcard(newCard.getCardNumber(), formatedTodayDate, null, newCard.getCardPrice());
+        esnCardService.addEsnCard(normalisedCard);
+        return "redirect:/ESNcards/";
     }
 
     @RequestMapping("/edit/{id}")
@@ -81,5 +72,33 @@ public class EsnCardsManagementController {
     @RequestMapping("/issue/{id}")
     public String issue() {
         return "esn_cards/esn_card_issue";
+    }
+
+    private static class Status {
+        private int issuedToday = 1;
+        private int todayIncome = 400;
+        private int internationalStudents = 1;
+        private int members = 0;
+        private int availableCards = 224;
+
+        public int getIssuedToday() {
+            return issuedToday;
+        }
+
+        public int getTodayIncome() {
+            return todayIncome;
+        }
+
+        public int getInternationalStudents() {
+            return internationalStudents;
+        }
+
+        public int getMembers() {
+            return members;
+        }
+
+        public int getAvailableCards() {
+            return availableCards;
+        }
     }
 }

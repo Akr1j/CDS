@@ -1,15 +1,12 @@
 package cz.esnhk.cds.model.cards;
 
 import cz.esnhk.cds.model.users.InternationalStudent;
-import cz.esnhk.cds.model.users.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "esncards")
 public class ESNcard {
-
-    private enum CardStatusType {ACTIVE, INACTIVE};
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +31,8 @@ public class ESNcard {
         this.dateOfImport = dateOfImport;
         this.dateOfIssue = dateOfIssue;
         this.cardPrice = cardPrice;
-        this.cardStatus = CardStatusType.ACTIVE;
+        this.cardStatus = CardStatusType.AVAILABLE;
+        //TODO: check status of card
     }
 
     public long getId() {
@@ -77,7 +75,7 @@ public class ESNcard {
         return true;
     }
 
-    public CardStatusType getCardStatus() {;
+    public CardStatusType getCardStatus() {
         return cardStatus;
     }
 
@@ -87,13 +85,6 @@ public class ESNcard {
 
     @Override
     public String toString() {
-        return "ESNcard{" +
-                "id=" + id +
-                ", cardNumber='" + cardNumber + '\'' +
-                ", dateOfImport='" + dateOfImport + '\'' +
-                ", dateOfIssue='" + dateOfIssue + '\'' +
-                ", cardPrice=" + cardPrice +
-                ", cardStatus=" + cardStatus +
-                '}';
+        return "ESNcard{" + "id=" + id + ", cardNumber='" + cardNumber + '\'' + ", dateOfImport='" + dateOfImport + '\'' + ", dateOfIssue='" + dateOfIssue + '\'' + ", cardPrice=" + cardPrice + ", cardStatus=" + cardStatus + '}';
     }
 }
