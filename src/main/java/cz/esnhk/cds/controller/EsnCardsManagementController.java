@@ -25,7 +25,7 @@ public class EsnCardsManagementController {
     @RequestMapping("/")
     public String list(Model model) {
         Status status = new Status();
-        status.setAvailableCards(esnCardService.getAllEsnCards().size());
+        status.setAvailableCards(esnCardService.getAvailableEsnCards().size());
         String formatedTodayDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
         List<ESNcard> todayIssued = esnCardService.getEsnCardsByDateOfIssue(formatedTodayDate);
         status.setIssuedToday(todayIssued.size());
