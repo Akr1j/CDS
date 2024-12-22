@@ -5,6 +5,7 @@ import cz.esnhk.cds.model.cards.SIMCard;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @MappedSuperclass
@@ -25,9 +26,9 @@ public abstract class User {
     private String dayJoined;
 
     @OneToMany
-    private List<ESNcard> esnCards;
+    private List<ESNcard> esnCards = new ArrayList<>();
     @OneToMany
-    private List<SIMCard> simCards;
+    private List<SIMCard> simCards = new ArrayList<>();
     private boolean welcomePack;
 
     public User(long id, String name, String surname, String middleName, String email, String phone, String dayJoined, ESNcard esnCards, SIMCard simCard, boolean welcomePack) {
@@ -115,6 +116,10 @@ public abstract class User {
 
     public List<ESNcard> getEsnCards() {
         return esnCards;
+    }
+
+    public void setEsnCards(List<ESNcard> esnCards) {
+        this.esnCards = esnCards;
     }
 
     public List<SIMCard> getSimCards() {
