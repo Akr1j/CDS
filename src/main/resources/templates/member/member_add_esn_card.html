@@ -23,7 +23,7 @@
         <div class="header">
             <h1>Add New ESN Card</h1>
         </div>
-        <form th:action="@{'/intStudent/profile/{id}/assignESNcard/' (id=${student.id})}" method="post">
+        <form th:action="@{'/members/profile/{id}/assignESNcard/' (id=${member.id})}" method="post">
             <div class="table">
                 <table>
                     <thead>
@@ -40,7 +40,7 @@
                         <td th:text="${card.cardStatus}"></td>
                         <td th:text="${card.dateOfImport}"></td>
                         <td>
-                            <form th:action="@{'/intStudent/profile/{id}/assignESNcard/' (id=${student.id}, esnCardId=${card.id})}"
+                            <form th:action="@{'/members/profile/{id}/assignESNcard/' (id=${member.id}, esnCardId=${card.id})}"
                                   method="post">
                                 <input type="hidden" name="esnCardId" th:value="${card.id}"/>
                                 <button type="submit" class="btn-submit">Add Card</button>

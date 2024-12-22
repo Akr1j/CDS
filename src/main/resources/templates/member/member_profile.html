@@ -6,7 +6,7 @@
     <link rel="stylesheet" th:href="@{/profiles.css}">
     <link rel="stylesheet" th:href="@{/menu.css}">
     <link rel="stylesheet" th:href="@{/main.css}">
-    <title>Student Profile</title>
+    <title>Member Profile</title>
 </head>
 <body>
 <div class="container">
@@ -44,29 +44,29 @@
                         <div class="circle"></div>
                     </div>
                     <div class="profile-info">
-                        <p>Name: <span th:text="${student.name}"></span> <span th:if="${student.middleName != null}"
-                                                                               th:text="${student.name}"></span> <span
-                                th:text="${student.surname}"></span></p>
-                        <p>Email: <span th:text="${student.email}"></span></p>
-                        <p>Phone number: <span th:text="${student.phone}"></span></p>
-                        <p>Country: <span th:text="${student.country}"></span></p>
+                        <p>Name: <span th:text="${member.name}"></span> <span th:if="${member.middleName != null}"
+                                                                              th:text="${member.name}"></span> <span
+                                th:text="${member.surname}"></span></p>
+                        <p>Email: <span th:text="${member.email}"></span></p>
+                        <p>Phone number: <span th:text="${member.phone}"></span></p>
+                        <p>Country: <span th:text="${member.faculty}"></span></p>
                     </div>
                 </div>
             </section>
             <div style="display: flex; flex-direction: column; width: 70%">
                 <div class="profile-about">
                     <h4>About me:</h4>
-                    <p th:text="${student.aboutMe}"></p>
-                    <!--<p>Assigned buddy: <span th:text="${student.buddy}">Jiří Jandourek</span></p>-->
+                    <p th:text="${member.aboutMe}"></p>
+                    <!--<p>Assigned buddy: <span th:text="${member.buddy}">Jiří Jandourek</span></p>-->
                 </div>
                 <section id="kits" style="display: flex">
                     <section class="profile-details">
                         <h1>ESNcards:</h1>
-                        <a th:href=" ${student.id} + '/addESNcard/'">Add card</a>
-                        <section th:if="${student.esnCards.size() == 0}">
+                        <a th:href=" ${member.id} + '/addESNcard/'">Add card</a>
+                        <section th:if="${member.esnCards.size() == 0}">
                             <p>No ESNcard issued yet</p>
                         </section>
-                        <section th:each="esnCard : ${student.esnCards}">
+                        <section th:each="esnCard : ${member.esnCards}">
                             <h2>ESNcard</h2>
                             <p>Number: <span th:text="${esnCard.cardNumber}"></span></p>
                             <p>Status: <span th:text="${esnCard.cardStatus}"></span></p>
@@ -76,11 +76,11 @@
                     </section>
                     <section class="profile-details">
                         <h1>SIM cards:</h1>
-                        <a th:href=" ${student.id} + '/addSIMcard/'">Add card</a>
-                        <section th:if="${student.simCards.size() == 0}">
+                        <a th:href=" ${member.id} + '/addSIMcard/'">Add card</a>
+                        <section th:if="${member.simCards.size() == 0}">
                             <p>No SIM card issued yet</p>
                         </section>
-                        <section th:each="simCard : ${student.simCards}">
+                        <section th:each="simCard : ${member.simCards}">
                             <h2>SIM card</h2>
                             <p>Number: <span th:text="${simCard.cardNumber}"></span></p>
                             <p>Status: <span th:text="${simCard.cardStatus}"></span></p>

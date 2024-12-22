@@ -23,6 +23,7 @@ public abstract class User {
     private String email;
     private String phone;
     private String dayJoined;
+    private String faculty;
 
     @OneToMany
     private List<ESNcard> esnCards;
@@ -148,6 +149,14 @@ public abstract class User {
     public void addESNcard(ESNcard esnCard) {
         esnCards.add(esnCard);
 
+    }
+
+    public String getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(String faculty) {
+        this.faculty = faculty;
     }
 
     public String toString() {

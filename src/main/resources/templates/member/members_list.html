@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/main.css">
     <link rel="stylesheet" href="/menu.css">
-    <title>International Students</title>
+    <title>Members</title>
 </head>
 <body>
 <div class="container">
@@ -43,7 +43,7 @@
             <input type="text" th:placeholder="'Country'"/>
             <button>Search</button>
             <button class="qr-button">QR</button>
-            <a class="qr-button" href="/intStudent/add">New international student</a>
+            <a class="qr-button" href="/members/add">New member</a>
         </div>
         <table>
             <thead>
@@ -58,14 +58,14 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="student : ${international_students}">
-                <td th:text="${student.name}"></td>
-                <td th:text="${student.surname}"></td>
-                <td th:text="${student.country}"></td>
-                <td><input type="checkbox" th:checked="${student.welcomePack}" disabled/></td>
-                <td><input type="checkbox" th:checked="${student.haveValidEsnCard()}" disabled/></td>
-                <td><input type="checkbox" th:checked="${student.haveValidSimCard()}" disabled/></td>
-                <td><a th:href="'/intStudent/profile/' + ${student.id}">Detail</a></td>
+            <tr th:each="member : ${members}">
+                <td th:text="${member.name}"></td>
+                <td th:text="${member.surname}"></td>
+                <td th:text="${member.faculty}"></td>
+                <td><input type="checkbox" th:checked="${member.welcomePack}" disabled/></td>
+                <td><input type="checkbox" th:checked="${member.haveValidEsnCard()}" disabled/></td>
+                <td><input type="checkbox" th:checked="${member.haveValidSimCard()}" disabled/></td>
+                <td><a th:href="'/members/profile/' + ${member.id}">Detail</a></td>
             </tr>
             </tbody>
         </table>
