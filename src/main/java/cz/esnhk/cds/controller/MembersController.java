@@ -84,7 +84,7 @@ public class MembersController {
         return "redirect:/501";
     }
 
-    @GetMapping("/profile/{id}/addESNcard/")
+    @GetMapping("/profile/{id}/assignSIMCard/")
     public String assignSIMCard(Model model, @PathVariable long id) {
         //Deprecated ??? TODO
         Member member = memberService.getMemberById(id);
