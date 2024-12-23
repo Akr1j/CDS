@@ -2,9 +2,11 @@ package cz.esnhk.cds.controller;
 
 import cz.esnhk.cds.model.cards.CardStatusType;
 import cz.esnhk.cds.model.cards.ESNcard;
+import cz.esnhk.cds.model.cards.SIMCard;
 import cz.esnhk.cds.model.users.Member;
-import cz.esnhk.cds.service.MemberService;
+import cz.esnhk.cds.service.Members.MemberService;
 import cz.esnhk.cds.service.esnCards.EsnCardService;
+import cz.esnhk.cds.service.simCards.SimCardService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,11 +19,13 @@ import java.util.Date;
 public class MembersController {
 
     private final EsnCardService esnCardService;
+    private final SimCardService simCardService;
     private MemberService memberService;
 
-    public MembersController(MemberService memberService, EsnCardService esnCardService) {
+    public MembersController(MemberService memberService, EsnCardService esnCardService, SimCardService simCardService) {
         this.memberService = memberService;
         this.esnCardService = esnCardService;
+        this.simCardService = simCardService;
     }
 
     @RequestMapping("/")
@@ -75,6 +79,32 @@ public class MembersController {
         esnCard.setCardStatus(CardStatusType.ISSUED);
         if (member != null && esnCard != null) {
             memberService.addESNcard(memberId, esnCard);
+            return "redirect:/members/profile/" + memberId;
+        }
+        return "redirect:/501";
+    }
+
+    @GetMapping("/profile/{id}/addESNcard/")
+    public String assignSIMCard(Model model, @PathVariable long id) {
+        //Deprecated ??? TODO
+        Member member = memberService.getMemberById(id);
+        if (member != null) {
+            model.addAttribute("member", member);
+            model.addAttribute("esnCards", simCardService.getAvailableSimCards());
+            model.addAttribute("simCardId", null);
+            return "member/member_add_sim_card";
+        }
+        return "redirect:/members/";
+    }
+
+    @PostMapping("/profile/{memberId}/assignSIMCard/")
+    public String assignSIMCard(@PathVariable long memberId, @RequestParam("simCardId") long simCardId) {
+        Member member = memberService.getMemberById(memberId);
+        SIMCard simCard = simCardService.getSimCardById(simCardId);
+        simCard.setDateOfIssue(new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
+        simCard.setCardStatus(CardStatusType.ISSUED);
+        if (member != null && simCard != null) {
+            memberService.assignSIMCard(memberId, simCard);
             return "redirect:/members/profile/" + memberId;
         }
         return "redirect:/501";

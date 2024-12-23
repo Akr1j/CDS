@@ -2,9 +2,11 @@ package cz.esnhk.cds.controller;
 
 import cz.esnhk.cds.model.cards.CardStatusType;
 import cz.esnhk.cds.model.cards.ESNcard;
+import cz.esnhk.cds.model.cards.SIMCard;
 import cz.esnhk.cds.model.users.InternationalStudent;
-import cz.esnhk.cds.service.InternationalStudentService;
+import cz.esnhk.cds.service.InternationalStudents.InternationalStudentService;
 import cz.esnhk.cds.service.esnCards.EsnCardService;
+import cz.esnhk.cds.service.simCards.SimCardService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,11 +19,13 @@ import java.util.Date;
 public class InternationalStudentsController {
 
     private final EsnCardService esnCardService;
+    private final SimCardService simCardService;
     private InternationalStudentService internationalStudentService;
 
-    public InternationalStudentsController(InternationalStudentService internationalStudentService, EsnCardService esnCardService) {
+    public InternationalStudentsController(InternationalStudentService internationalStudentService, EsnCardService esnCardService, SimCardService simCardService) {
         this.internationalStudentService = internationalStudentService;
         this.esnCardService = esnCardService;
+        this.simCardService = simCardService;
     }
 
     @RequestMapping("/")
@@ -74,6 +78,32 @@ public class InternationalStudentsController {
         esnCard.setCardStatus(CardStatusType.ISSUED);
         if (internationalStudent != null && esnCard != null) {
             internationalStudentService.addESNcard(id, esnCard);
+            return "redirect:/intStudent/profile/" + id;
+        }
+        return "redirect:/501";
+    }
+
+    @GetMapping("intStudent/profile/{id}/assignSIMCard/")
+    public String assignSIMCard(Model model, @PathVariable long id) {
+        InternationalStudent internationalStudent = internationalStudentService.getInternationalStudentById(id);
+        if (internationalStudent != null) {
+            model.addAttribute("student", internationalStudent);
+            //TODO: get only ESN cards that are not assigned to any student
+            model.addAttribute("simCards", simCardService.getAvailableSimCards());
+            model.addAttribute("simCardId", null);
+            return "international_students/international_student_add_sim_card";
+        }
+        return "redirect:/";
+    }
+
+    @PostMapping("intStudent/profile/{id}/assignSIMCard/")
+    public String assignSIMCard(@PathVariable long id, @RequestParam("simCardId") long simCardId) {
+        InternationalStudent internationalStudent = internationalStudentService.getInternationalStudentById(id);
+        SIMCard simCard = simCardService.getSimCardById(simCardId);
+        simCard.setDateOfIssue(new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
+        simCard.setCardStatus(CardStatusType.ISSUED);
+        if (internationalStudent != null) {
+            internationalStudentService.assignSimCard(id, simCard);
             return "redirect:/intStudent/profile/" + id;
         }
         return "redirect:/501";

@@ -20,7 +20,7 @@
         <li onclick="window.location.href='/ESNcards/'">
             <h1>ESNcards</h1>
         </li>
-        <li>
+        <li onclick="window.location.href='/SIMCards/'">
             <h1>SIM cards</h1>
         </li>
         <li>
@@ -76,13 +76,13 @@
                     </section>
                     <section class="profile-details">
                         <h1>SIM cards:</h1>
-                        <a th:href=" ${student.id} + '/addSIMcard/'">Add card</a>
+                        <a th:href=" ${student.id} + '/assignSIMCard/'">Add card</a>
                         <section th:if="${student.simCards.size() == 0}">
                             <p>No SIM card issued yet</p>
                         </section>
                         <section th:each="simCard : ${student.simCards}">
                             <h2>SIM card</h2>
-                            <p>Number: <span th:text="${simCard.cardNumber}"></span></p>
+                            <p>Number: <span th:text="${simCard.simCardNumber}"></span></p>
                             <p>Status: <span th:text="${simCard.cardStatus}"></span></p>
                         </section>
                     </section>

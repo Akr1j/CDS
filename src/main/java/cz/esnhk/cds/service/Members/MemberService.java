@@ -1,6 +1,7 @@
-package cz.esnhk.cds.service;
+package cz.esnhk.cds.service.Members;
 
 import cz.esnhk.cds.model.cards.ESNcard;
+import cz.esnhk.cds.model.cards.SIMCard;
 import cz.esnhk.cds.model.users.Member;
 import org.springframework.stereotype.Service;
 
@@ -15,4 +16,6 @@ public interface MemberService {
     void addMember(Member member);
 
     void addESNcard(long id, ESNcard cardNumber);
+
+    void assignSIMCard(long id, SIMCard cardNumber);
 }

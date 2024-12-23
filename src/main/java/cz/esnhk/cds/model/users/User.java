@@ -151,6 +151,10 @@ public abstract class User {
 
     }
 
+    public void addSimCard(SIMCard simCard) {
+        simCards.add(simCard);
+    }
+
     public String getFaculty() {
         return faculty;
     }

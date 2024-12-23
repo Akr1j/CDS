@@ -13,7 +13,59 @@ public class SIMCard {
     private String dateOfImport;
     private String dateOfIssue;
 
+    private CardStatusType cardStatus;
+
     public boolean isValid() {
         return true;
+    }
+
+    public SIMCard() {
+    }
+
+    public SIMCard(String simCardNumber, String dateOfImport, String dateOfIssue, CardStatusType cardStatus) {
+        this.simCardNumber = simCardNumber;
+        this.dateOfImport = dateOfImport;
+        this.dateOfIssue = dateOfIssue;
+        this.cardStatus = cardStatus;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getSimCardNumber() {
+        return simCardNumber;
+    }
+
+    public void setSimCardNumber(String simCardNumber) {
+        this.simCardNumber = simCardNumber;
+    }
+
+    public String getDateOfImport() {
+        return dateOfImport;
+    }
+
+    public void setDateOfImport(String dateOfImport) {
+        this.dateOfImport = dateOfImport;
+    }
+
+    public String getDateOfIssue() {
+        return dateOfIssue;
+    }
+
+    public void setDateOfIssue(String dateOfIssue) {
+        this.dateOfIssue = dateOfIssue;
+    }
+
+    public CardStatusType getCardStatus() {
+        return cardStatus;
+    }
+
+    public void setCardStatus(CardStatusType cardStatus) {
+        this.cardStatus = cardStatus;
     }
 }

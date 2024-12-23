@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/esncards-list.css">
-    <title>ESN Cards Management</title>
+    <title>SIM Cards Management</title>
 </head>
 <body>
 <div class="container">
@@ -12,8 +12,8 @@
         <ul>
             <li onclick="window.location.href='/'">International Students</li>
             <li onclick="window.location.href='/members/'">Members</li>
-            <li onclick="window.location.href='/ESNcards/'" th:classappend="${'active'}">ESNcards</li>
-            <li onclick="window.location.href='/SIMCards/'">SIM cards</li>
+            <li onclick="window.location.href='/ESNcards/'">ESNcards</li>
+            <li onclick="window.location.href='/SIMCards/'" th:classappend="${'active'}">SIM cards</li>
             <li>Welcome Packs</li>
             <li>Statistic</li>
             <li>Administration</li>
@@ -50,8 +50,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="card : ${esn_cards}">
-                    <td th:text="${card.cardNumber}"></td>
+                <tr th:each="card : ${sim_cards}">
+                    <td th:text="${card.simCardNumber}"></td>
                     <td th:text="${card.cardStatus}"></td>
                     <td th:text="${card.dateOfImport}"></td>
                     <td th:text="${card.dateOfIssue ?: '-'}">-</td>
@@ -82,7 +82,7 @@
             </div>
         </div>
         <div class="actions">
-            <button onclick="window.location.href='/ESNcards/add'">Add new ESNcard</button>
+            <button onclick="window.location.href='/SIMCards/add'">Add new ESNcard</button>
             <button th:onclick="">Add multiple ESNcards</button>
         </div>
     </main>

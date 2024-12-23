@@ -1,9 +1,11 @@
-package cz.esnhk.cds.service;
+package cz.esnhk.cds.service.Members;
 
 import cz.esnhk.cds.model.cards.ESNcard;
+import cz.esnhk.cds.model.cards.SIMCard;
 import cz.esnhk.cds.model.users.Member;
 import cz.esnhk.cds.repository.ESNCardRepository;
 import cz.esnhk.cds.repository.MembersRepository;
+import cz.esnhk.cds.repository.SimCardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +15,13 @@ import java.util.List;
 public class MemberImpl implements MemberService {
     private final MembersRepository membersRepository;
     ESNCardRepository ESNCardRepository;
+    SimCardRepository simCardRepository;
 
     @Autowired
-    public MemberImpl(MembersRepository membersRepository, ESNCardRepository ESNCardRepository) {
+    public MemberImpl(MembersRepository membersRepository, ESNCardRepository ESNCardRepository, SimCardRepository simCardRepository) {
         this.ESNCardRepository = ESNCardRepository;
         this.membersRepository = membersRepository;
+        this.simCardRepository = simCardRepository;
     }
 
     @Override
@@ -43,6 +47,17 @@ public class MemberImpl implements MemberService {
         if (member != null && esnCard1 != null) {
             member.addESNcard(esnCard1);
             ESNCardRepository.save(esnCard1);
+            membersRepository.save(member);
+        }
+    }
+
+    @Override
+    public void assignSIMCard(long memberId, SIMCard simCard) {
+        Member member = membersRepository.findById(memberId).orElse(null);
+        SIMCard simCard1 = simCardRepository.findById(simCard.getId()).orElse(null);
+        if (member != null && simCard1 != null) {
+            member.addSimCard(simCard1);
+            simCardRepository.save(simCard1);
             membersRepository.save(member);
         }
     }
