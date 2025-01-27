@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/profiles.css}">
+    <link rel="stylesheet" th:href="@{/menu.css}">
+    <link rel="stylesheet" th:href="@{/main.css}">
+    <title>Student Profile</title>
+</head>
+<body>
+<div class="container">
+    <menu>
+        <li>
+            <h1>International students</h1>
+        </li>
+        <li>
+            <h1>Members</h1>
+        </li>
+        <li>
+            <h1>ESNcards</h1>
+        </li>
+        <li>
+            <h1>SIM cards</h1>
+        </li>
+        <li>
+            <h1>Welcome packs</h1>
+        </li>
+        <li>
+            <h1>Statistic</h1>
+        </li>
+        <li>
+            <h1>Administration</h1>
+        </li>
+    </menu>
+    <main class="content">
+        <div class="profile-header">
+            <a class="close-btn" href="/">X</a>
+        </div>
+        <section style="display: flex">
+            <section id="personal-info">
+                <div class="profile-content">
+                    <div class="profile-picture">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="profile-info">
+                        <p>Name: <span th:text="${student.name}"></span> <span th:if="${student.middleName != null}" th:text="${student.name}"></span> <span th:text="${student.surname}"></span></p>
+                        <p>Email: <span th:text="${student.email}"></span></p>
+                        <p>Phone number: <span th:text="${student.phone}"></span></p>
+                        <p>Country: <span th:text="${student.country}"></span></p>
+                    </div>
+                </div>
+            </section>
+            <div style="display: flex; flex-direction: column; width: 70%">
+                <div class="profile-about">
+                    <h4>About me:</h4>
+                    <p th:text="${student.aboutMe}"></p>
+                    <!--<p>Assigned buddy: <span th:text="${student.buddy}">Jiří Jandourek</span></p>-->
+                </div>
+                <section id="kits" style="display: flex">
+                    <section class="profile-details">
+                        <h1>ESNcards:</h1>
+                        <a th:href=" ${student.id} + '/addESNcard/'">Add card</a>
+                        <section th:if="${student.esnCards.size() == 0}">
+                            <p>No ESNcard issued yet</p>
+                        </section>
+                        <section th:each="esnCard : ${student.esnCards}">
+                            <h2>ESNcard</h2>
+                            <p>Number: <span th:text="${esnCard.cardNumber}"></span></p>
+                            <p>Status: <span th:text="${esnCard.cardStatus}"></span></p>
+                            <p>Date of Issue: <span th:text="${esnCard.dateOfIssue}"></span></p>
+                            <p>Date of Import: <span th:text="${esnCard.dateOfImport}"></span></p>
+                        </section>
+                    </section>
+                    <section class="profile-details">
+                        <h1>SIM cards:</h1>
+                        <a th:href=" ${student.id} + '/addSIMcard/'">Add card</a>
+                        <section th:if="${student.simCards.size() == 0}">
+                            <p>No SIM card issued yet</p>
+                        </section>
+                        <section th:each="simCard : ${student.simCards}">
+                            <h2>SIM card</h2>
+                            <p>Number: <span th:text="${simCard.cardNumber}"></span></p>
+                            <p>Status: <span th:text="${simCard.cardStatus}"></span></p>
+                        </section>
+                    </section>
+                </section>
+            </div>
+        </section>
+    </main>
+</div>
+</body>
+</html>

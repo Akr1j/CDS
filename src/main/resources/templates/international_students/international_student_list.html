@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/main.css">
+    <link rel="stylesheet" href="/menu.css">
+    <title>International Students</title>
+</head>
+<body>
+    <div class="container">
+        <menu>
+            <li>
+                <h1>International students</h1>
+            </li>
+            <li>
+                <h1>Members</h1>
+            </li>
+            <li>
+                <h1>ESNcards</h1>
+            </li>
+            <li>
+                <h1>SIM cards</h1>
+            </li>
+            <li>
+                <h1>Welcome packs</h1>
+            </li>
+            <li>
+                <h1>Statistic</h1>
+            </li>
+            <li>
+                <h1>Administration</h1>
+            </li>
+        </menu>
+        <main class="content">
+            <div class="header">
+                <span>Semester</span>
+                <select th:name="semester">
+                    <option value="2024/2025 Winter semester (Current)">2024/2025 Winter semester (Current)</option>
+                    <!-- Add more options dynamically -->
+                </select>
+                <input type="text" th:placeholder="'Search'" />
+                <input type="text" th:placeholder="'Country'" />
+                <button>Search</button>
+                <button class="qr-button">QR</button>
+                <a class="qr-button" href="/intStudent/add">New international student</a>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Country</th>
+                        <th>Welcome Pack</th>
+                        <th>ESNcard</th>
+                        <th>SIM card</th>
+                        <th>Profile</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="student : ${international_students}">
+                        <td th:text="${student.name}"></td>
+                        <td th:text="${student.surname}"></td>
+                        <td th:text="${student.country}"></td>
+                        <td><input type="checkbox" th:checked="${student.welcomePack}" disabled /></td>
+                        <td><input type="checkbox" th:checked="${student.haveValidEsnCard()}" disabled /></td>
+                        <td><input type="checkbox" th:checked="${student.haveValidSimCard()}" disabled /></td>
+                        <td><a th:href="'/intStudent/profile/' + ${student.id}">Detail</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+    </div>
+</body>
+</html>
