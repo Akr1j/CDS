@@ -1,4 +1,4 @@
-package cz.esnhk.cds.model;
+package cz.esnhk.cds.model.security.artemis_responses;
 
 import java.util.Date;
 
@@ -16,8 +16,6 @@ public class UserDetailsResponse {
     private Date date_of_birth;
     private boolean email_subscription;
     private boolean is_active;
-
-    ;
     private boolean staff;
     private String profile_picture;
     private boolean confirmed;

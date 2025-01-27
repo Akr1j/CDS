@@ -1,6 +1,6 @@
 package cz.esnhk.cds.controller;
 
-import cz.esnhk.cds.model.AuthResponse;
+import cz.esnhk.cds.model.security.artemis_responses.AuthResponse;
 import cz.esnhk.cds.service.AuthenticationService;
 import cz.esnhk.cds.service.AuthorizationService;
 import jakarta.servlet.http.Cookie;
@@ -48,6 +48,7 @@ public class IndexController {
     @PostMapping("/login")
     public String login(@RequestParam("email") String email, @RequestParam("password") String password, HttpServletResponse response) {
         AuthResponse user = authenticationService.authenticate(email, password);
+        //TODO Authorization just checks if the user is in the group but dont add to the security context
         if (authorizationService.authorize(user.getId(), user.getToken())) {
             response.addCookie(new Cookie(TOKEN_COOKIE, user.getToken()));
             return "redirect:/";

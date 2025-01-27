@@ -1,6 +1,6 @@
 package cz.esnhk.cds.service;
 
-import cz.esnhk.cds.model.UserDetailsResponse;
+import cz.esnhk.cds.model.security.artemis_responses.UserDetailsResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -11,39 +11,47 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class AuthorizationService {
+    private final RestTemplate restTemplate;
     @Value("${members.group-allowed}")
     private String group_allowed;
-
-    public boolean authorize(int userId, String role) {
-
-        //TODO dynamic group
-        String groups = String.valueOf(getUserDetails(userId, role).getGroups()[0]);
-
-        //int group_allowed = Integer.parseInt(this.group_allowed);
-
-        return groups.equals(group_allowed);
-    }
-
-
-    private final RestTemplate restTemplate;
-
-    @Value("${members.url.artemis}") // E.g., "https://artemis.esnhk.cz/api/v1/users"
+    @Value("${members.url.artemis}")
     private String membersApiUrl;
 
     public AuthorizationService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
+    /**
+     * Authorize the user based on the groups he is in
+     *
+     * @param userId The ID of the user
+     * @param role   The role of the user
+     * @return True if the user is authorized, false otherwise
+     */
+    public boolean authorize(int userId, String role) {
+        //TODO: Group is not always the first element in the array check all elements
+        String groups = String.valueOf(getUserDetails(userId, role).getGroups()[0]);
+        return groups.equals(group_allowed);
+    }
+
+    /**
+     * Get the user details from the members API (Artemis)
+     *
+     * @param userId The ID of the user
+     * @param token  The token to authenticate the request
+     * @return The user details
+     */
     public UserDetailsResponse getUserDetails(int userId, String token) {
         String url = membersApiUrl + "/" + userId + "/";
 
+        //Prepare the request
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + token); // Include the token in the header
-
         HttpEntity<Void> request = new HttpEntity<>(headers);
 
+        //Send the request and get the response
         ResponseEntity<UserDetailsResponse> response = restTemplate.exchange(url, HttpMethod.GET, request, UserDetailsResponse.class);
 
-        return response.getBody(); // List of roles
+        return response.getBody();
     }
 }

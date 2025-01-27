@@ -1,10 +1,8 @@
 package cz.esnhk.cds.service;
 
-import cz.esnhk.cds.model.AuthResponse;
-import jakarta.servlet.http.HttpSession;
+import cz.esnhk.cds.model.security.artemis_responses.AuthResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -28,6 +26,13 @@ public class AuthenticationService {
         this.restTemplate = restTemplate;
     }
 
+    /**
+     * Authenticate the user with the given email and password against the Artemis authentication server.
+     *
+     * @param email    The email of the user.
+     * @param password The password of the user.
+     * @return The response from the authentication server.
+     */
     public AuthResponse authenticate(String email, String password) {
         // Prepare headers (optional, e.g., for Content-Type)
         HttpHeaders headers = new HttpHeaders();

@@ -1,25 +1,19 @@
 package cz.esnhk.cds.service;
 
 import com.auth0.jwt.JWT;
-import cz.esnhk.cds.model.AuthResponse;
-import cz.esnhk.cds.model.UserDetailsResponse;
+import cz.esnhk.cds.model.security.artemis_responses.UserDetailsResponse;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.lang.NonNull;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -30,11 +24,9 @@ import java.util.Optional;
 
 public class CustomAuthenticationFilter extends OncePerRequestFilter {
 
-    private final AuthorizationService authorizationService; // Your custom service to fetch user details
-
-
     public static final String AUTHENTICATION_EXCEPTION = "authentication-exception";
     public static final String TOKEN_COOKIE = "token";
+    private final AuthorizationService authorizationService;
 
     public CustomAuthenticationFilter(AuthorizationService authorizationService) {
         this.authorizationService = authorizationService;
@@ -70,11 +62,8 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
 
     public void attemptAuthentication(String token) {
 
-        int userId = JWT.decode(token)
-                .getClaim("user_id")
-                .asInt();
+        int userId = JWT.decode(token).getClaim("user_id").asInt();
 
-        // Step 2: Use the token to fetch detailed user info, including roles
         UserDetailsResponse userDetails = authorizationService.getUserDetails(userId, token);
         if (userDetails == null || userDetails.getGroups() == null) {
             throw new BadCredentialsException("Failed to fetch user details: No roles found for the user.");
@@ -89,12 +78,9 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
         }
 
         // Create an authentication token
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                userId,
-                token,
-                authorities               // Roles/Authorities
-        );
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userId, token, authorities);
 
+        //Create a security context and set the authentication token
         SecurityContext context = SecurityContextHolder.createEmptyContext();
         context.setAuthentication(authenticationToken);
         SecurityContextHolder.setContext(context);
@@ -102,14 +88,11 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
 
     private String mapGroupIdToRole(Integer groupId) {
         // Map group IDs from Artemis to roles in your system
-        switch (groupId) {
-            case 1:
-                return "ROLE_ADMIN";
-            case 2:
-                return "ROLE_USER";
-            default:
-                return "ROLE_NO_ACCESS"; // Default role if no specific mapping
-        }
+        return switch (groupId) {
+            case 1 -> "ROLE_ADMIN";
+            case 2 -> "ROLE_USER";
+            default -> "ROLE_NO_ACCESS"; // Default role if no specific mapping
+        };
     }
 
     private Optional<String> getTokenFromCookies(@NonNull HttpServletRequest request) {
