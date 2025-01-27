@@ -18,6 +18,8 @@ public class ESNcard {
     private String dateOfIssue;
     private int cardPrice;
     private CardStatusType cardStatus;
+    private int issuedBy;
+    private int importedBy;
 
     @ManyToOne
     @JoinColumn(name = "owner_id")
@@ -86,5 +88,33 @@ public class ESNcard {
     @Override
     public String toString() {
         return "ESNcard{" + "id=" + id + ", cardNumber='" + cardNumber + '\'' + ", dateOfImport='" + dateOfImport + '\'' + ", dateOfIssue='" + dateOfIssue + '\'' + ", cardPrice=" + cardPrice + ", cardStatus=" + cardStatus + '}';
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public int getIssuedBy() {
+        return issuedBy;
+    }
+
+    public void setIssuedBy(int issuedBy) {
+        this.issuedBy = issuedBy;
+    }
+
+    public int getImportedBy() {
+        return importedBy;
+    }
+
+    public void setImportedBy(int importedBy) {
+        this.importedBy = importedBy;
+    }
+
+    public InternationalStudent getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(InternationalStudent ownerId) {
+        this.ownerId = ownerId;
     }
 }

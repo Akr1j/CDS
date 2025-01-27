@@ -12,6 +12,8 @@ public class SIMCard {
     private String simCardNumber;
     private String dateOfImport;
     private String dateOfIssue;
+    private int issuedBy;
+    private int importedBy;
 
     private CardStatusType cardStatus;
 
@@ -67,5 +69,21 @@ public class SIMCard {
 
     public void setCardStatus(CardStatusType cardStatus) {
         this.cardStatus = cardStatus;
+    }
+
+    public int getIssuedBy() {
+        return issuedBy;
+    }
+
+    public void setIssuedBy(int issuedBy) {
+        this.issuedBy = issuedBy;
+    }
+
+    public int getImportedBy() {
+        return importedBy;
+    }
+
+    public void setImportedBy(int importedBy) {
+        this.importedBy = importedBy;
     }
 }
