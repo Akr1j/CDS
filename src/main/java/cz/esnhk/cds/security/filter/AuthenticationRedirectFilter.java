@@ -1,4 +1,4 @@
-package cz.esnhk.cds.security;
+package cz.esnhk.cds.security.filter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -14,7 +14,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-import static cz.esnhk.cds.security.SecurityConfig.LOGIN_ENDPOINT;
+import static cz.esnhk.cds.Endpoints.LOGIN_ENDPOINT;
 
 public class AuthenticationRedirectFilter extends OncePerRequestFilter {
     @Override

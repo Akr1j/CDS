@@ -1,6 +1,6 @@
-package cz.esnhk.cds.service;
+package cz.esnhk.cds.security;
 
-import cz.esnhk.cds.model.security.artemis_responses.UserDetailsResponse;
+import cz.esnhk.cds.security.model.artemis_responses.UserDetailsResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;

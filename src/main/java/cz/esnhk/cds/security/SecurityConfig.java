@@ -1,7 +1,7 @@
 package cz.esnhk.cds.security;
 
-import cz.esnhk.cds.service.AuthorizationService;
-import cz.esnhk.cds.service.CustomAuthenticationFilter;
+import cz.esnhk.cds.security.filter.AuthenticationRedirectFilter;
+import cz.esnhk.cds.security.filter.CustomAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -14,14 +14,12 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
+import static cz.esnhk.cds.Endpoints.*;
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-
-    static final String LOGIN_ENDPOINT = "/login";
-    private static final String SCRIPTS_ENDPOINT = "/scripts";
-    private static final String STYLES_ENDPOINT = "/styles";
 
     private final CustomAuthenticationFilter customAuthenticationFilter;
 

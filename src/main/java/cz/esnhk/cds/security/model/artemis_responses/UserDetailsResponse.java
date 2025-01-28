@@ -1,4 +1,4 @@
-package cz.esnhk.cds.model.security.artemis_responses;
+package cz.esnhk.cds.security.model.artemis_responses;
 
 import java.util.Date;
 

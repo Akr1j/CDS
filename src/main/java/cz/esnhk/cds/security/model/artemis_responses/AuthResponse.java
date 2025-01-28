@@ -1,4 +1,4 @@
-package cz.esnhk.cds.model.security.artemis_responses;
+package cz.esnhk.cds.security.model.artemis_responses;
 
 public class AuthResponse {
     private String token;

@@ -1,7 +1,8 @@
-package cz.esnhk.cds.service;
+package cz.esnhk.cds.security.filter;
 
 import com.auth0.jwt.JWT;
-import cz.esnhk.cds.model.security.artemis_responses.UserDetailsResponse;
+import cz.esnhk.cds.security.AuthorizationService;
+import cz.esnhk.cds.security.model.artemis_responses.UserDetailsResponse;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -23,8 +24,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class CustomAuthenticationFilter extends OncePerRequestFilter {
+    //TODO: Nebude se náhodou spouětět vždy i když už je užitatel přihlášený jelikož dědí z OncePerRequestFilter?
 
-    public static final String AUTHENTICATION_EXCEPTION = "authentication-exception";
     public static final String TOKEN_COOKIE = "token";
     private final AuthorizationService authorizationService;
 

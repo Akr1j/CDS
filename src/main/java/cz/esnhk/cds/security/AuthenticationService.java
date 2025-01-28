@@ -1,6 +1,6 @@
-package cz.esnhk.cds.service;
+package cz.esnhk.cds.security;
 
-import cz.esnhk.cds.model.security.artemis_responses.AuthResponse;
+import cz.esnhk.cds.security.model.artemis_responses.AuthResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;

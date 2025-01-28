@@ -1,8 +1,8 @@
 package cz.esnhk.cds.controller;
 
-import cz.esnhk.cds.model.security.artemis_responses.AuthResponse;
-import cz.esnhk.cds.service.AuthenticationService;
-import cz.esnhk.cds.service.AuthorizationService;
+import cz.esnhk.cds.security.model.artemis_responses.AuthResponse;
+import cz.esnhk.cds.security.AuthenticationService;
+import cz.esnhk.cds.security.AuthorizationService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import static cz.esnhk.cds.service.CustomAuthenticationFilter.TOKEN_COOKIE;
+import static cz.esnhk.cds.security.filter.CustomAuthenticationFilter.TOKEN_COOKIE;
 
 @Controller
 @RequestMapping("/")
