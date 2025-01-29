@@ -2,6 +2,7 @@ package cz.esnhk.cds.security;
 
 import cz.esnhk.cds.security.model.artemis_responses.UserDetailsResponse;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -41,6 +42,7 @@ public class AuthorizationService {
      * @param token  The token to authenticate the request
      * @return The user details
      */
+    @Cacheable("userDetails")
     public UserDetailsResponse getUserDetails(int userId, String token) {
         String url = membersApiUrl + "/" + userId + "/";
 
