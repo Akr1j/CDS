@@ -11,7 +11,7 @@ import java.util.List;
 public interface SimCardRepository extends JpaRepository<SIMCard, Long> {
     List<SIMCard> findByCardStatus(CardStatusType cardStatus);
 
-    SIMCard findBySimCardNumber(String simCardNumber);
+    SIMCard findByCardNumber(String cardNumber);
 
     List<SIMCard> findByDateOfImport(@NotBlank String dateOfImport);
 

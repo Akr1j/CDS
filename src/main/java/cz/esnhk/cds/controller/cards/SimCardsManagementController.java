@@ -1,8 +1,8 @@
-package cz.esnhk.cds.controller;
+package cz.esnhk.cds.controller.cards;
 
 import cz.esnhk.cds.model.cards.CardStatusType;
 import cz.esnhk.cds.model.cards.SIMCard;
-import cz.esnhk.cds.service.simCards.SimCardService;
+import cz.esnhk.cds.service.card.simCards.SimCardService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -34,7 +34,7 @@ public class SimCardsManagementController {
         status.setMembers(simCardService.getSimCardsByDateOfIssueMembers(formatedTodayDate).size());
 
         //TODO: update dynamically
-        status.todayIncome = todayIssued.size() * 400;
+        status.setTodayIncome(todayIssued.size() * 400);
 
         model.addAttribute("sim_cards", simCardService.getAllSimCards());
         model.addAttribute("currentSemester", "2025/2025");
@@ -59,14 +59,14 @@ public class SimCardsManagementController {
 
     @PostMapping("/add")
     public String add(@ModelAttribute SIMCard newCard) {
-        if (simCardService.getSimCardByCardNumber(newCard.getSimCardNumber()) != null) {
+        if (simCardService.getSimCardByCardNumber(newCard.getCardNumber()) != null) {
             //TODO: error message
             System.out.println("Card is already in database");
             return "redirect:/SIMCards/";
         }
 
         String formatedTodayDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
-        SIMCard normalisedCard = new SIMCard(newCard.getSimCardNumber(), formatedTodayDate, null, CardStatusType.AVAILABLE);
+        SIMCard normalisedCard = new SIMCard(newCard.getCardNumber(), formatedTodayDate, null, CardStatusType.AVAILABLE);
         simCardService.addSimCard(normalisedCard);
         return "redirect:/SIMCards/";
     }
@@ -84,49 +84,5 @@ public class SimCardsManagementController {
     @RequestMapping("/issue/{id}")
     public String issue() {
         return "sim_cards/sim_card_issue";
-    }
-
-    private static class Status {
-        private int todayIncome;
-        private int issuedToday;
-        private int internationalStudents;
-        private int members;
-        private int availableCards;
-
-        public int getIssuedToday() {
-            return issuedToday;
-        }
-
-        public void setIssuedToday(int issuedToday) {
-            this.issuedToday = issuedToday;
-        }
-
-        public int getTodayIncome() {
-            return todayIncome;
-        }
-
-        public int getInternationalStudents() {
-            return internationalStudents;
-        }
-
-        public int getMembers() {
-            return members;
-        }
-
-        public int getAvailableCards() {
-            return availableCards;
-        }
-
-        public void setAvailableCards(int availableCards) {
-            this.availableCards = availableCards;
-        }
-
-        public void setInternationalStudents(int internationalStudents) {
-            this.internationalStudents = internationalStudents;
-        }
-
-        public void setMembers(int members) {
-            this.members = members;
-        }
     }
 }

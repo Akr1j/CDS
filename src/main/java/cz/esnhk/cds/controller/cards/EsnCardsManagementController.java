@@ -1,7 +1,7 @@
-package cz.esnhk.cds.controller;
+package cz.esnhk.cds.controller.cards;
 
 import cz.esnhk.cds.model.cards.ESNcard;
-import cz.esnhk.cds.service.esnCards.EsnCardService;
+import cz.esnhk.cds.service.card.esnCards.EsnCardService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("/ESNcards/")
 public class EsnCardsManagementController {
 
-    private EsnCardService esnCardService;
+    private final EsnCardService esnCardService;
 
     public EsnCardsManagementController(EsnCardService esnCardService) {
         this.esnCardService = esnCardService;
@@ -33,7 +33,7 @@ public class EsnCardsManagementController {
         status.setMembers(esnCardService.getESNCardsByDateOfIssueMembers(formatedTodayDate).size());
 
         //TODO: update dynamically
-        status.todayIncome = todayIssued.size() * 400;
+        status.setTodayIncome(todayIssued.size() * 400);
 
         model.addAttribute("esn_cards", esnCardService.getAllEsnCards());
         model.addAttribute("currentSemester", "2025/2025");
@@ -84,49 +84,5 @@ public class EsnCardsManagementController {
     @RequestMapping("/issue/{id}")
     public String issue() {
         return "esn_cards/esn_card_issue";
-    }
-
-    private static class Status {
-        private int todayIncome;
-        private int issuedToday;
-        private int internationalStudents;
-        private int members;
-        private int availableCards;
-
-        public int getIssuedToday() {
-            return issuedToday;
-        }
-
-        public void setIssuedToday(int issuedToday) {
-            this.issuedToday = issuedToday;
-        }
-
-        public int getTodayIncome() {
-            return todayIncome;
-        }
-
-        public int getInternationalStudents() {
-            return internationalStudents;
-        }
-
-        public int getMembers() {
-            return members;
-        }
-
-        public int getAvailableCards() {
-            return availableCards;
-        }
-
-        public void setAvailableCards(int availableCards) {
-            this.availableCards = availableCards;
-        }
-
-        public void setInternationalStudents(int internationalStudents) {
-            this.internationalStudents = internationalStudents;
-        }
-
-        public void setMembers(int members) {
-            this.members = members;
-        }
     }
 }

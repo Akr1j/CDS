@@ -1,120 +1,27 @@
 package cz.esnhk.cds.model.cards;
 
-import cz.esnhk.cds.model.users.InternationalStudent;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "esncards")
-public class ESNcard {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    private String cardNumber;
-    @NotBlank
-    private String dateOfImport;
-    private String dateOfIssue;
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+public class ESNcard extends Card {
     private int cardPrice;
     private CardStatusType cardStatus;
-    private int issuedBy;
-    private int importedBy;
-
-    @ManyToOne
-    @JoinColumn(name = "owner_id")
-    private InternationalStudent ownerId;
-
-    public ESNcard() {
-    }
 
     public ESNcard(String cardNumber, String dateOfImport, String dateOfIssue, int cardPrice) {
-        this.cardNumber = cardNumber;
-        this.dateOfImport = dateOfImport;
-        this.dateOfIssue = dateOfIssue;
+        super(cardNumber, dateOfImport, dateOfIssue);
         this.cardPrice = cardPrice;
         this.cardStatus = CardStatusType.AVAILABLE;
         //TODO: check status of card
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public String getCardNumber() {
-        return cardNumber;
-    }
-
-    public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
-    }
-
-    public String getDateOfImport() {
-        return dateOfImport;
-    }
-
-    public void setDateOfImport(String dateOfImport) {
-        this.dateOfImport = dateOfImport;
-    }
-
-    public String getDateOfIssue() {
-        return dateOfIssue;
-    }
-
-    public void setDateOfIssue(String dateOfIssue) {
-        this.dateOfIssue = dateOfIssue;
-    }
-
-    public int getCardPrice() {
-        return cardPrice;
-    }
-
-    public void setCardPrice(int cardPrice) {
-        this.cardPrice = cardPrice;
-    }
-
     public boolean isValid() {
         return true;
-    }
-
-    public CardStatusType getCardStatus() {
-        return cardStatus;
-    }
-
-    public void setCardStatus(CardStatusType cardStatus) {
-        this.cardStatus = cardStatus;
-    }
-
-    @Override
-    public String toString() {
-        return "ESNcard{" + "id=" + id + ", cardNumber='" + cardNumber + '\'' + ", dateOfImport='" + dateOfImport + '\'' + ", dateOfIssue='" + dateOfIssue + '\'' + ", cardPrice=" + cardPrice + ", cardStatus=" + cardStatus + '}';
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public int getIssuedBy() {
-        return issuedBy;
-    }
-
-    public void setIssuedBy(int issuedBy) {
-        this.issuedBy = issuedBy;
-    }
-
-    public int getImportedBy() {
-        return importedBy;
-    }
-
-    public void setImportedBy(int importedBy) {
-        this.importedBy = importedBy;
-    }
-
-    public InternationalStudent getOwnerId() {
-        return ownerId;
-    }
-
-    public void setOwnerId(InternationalStudent ownerId) {
-        this.ownerId = ownerId;
     }
 }

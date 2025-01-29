@@ -1,4 +1,4 @@
-package cz.esnhk.cds.service.esnCards;
+package cz.esnhk.cds.service.card.esnCards;
 
 import cz.esnhk.cds.model.cards.ESNcard;
 import org.springframework.stereotype.Service;
