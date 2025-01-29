@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
+import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
@@ -41,6 +42,8 @@ public class SecurityConfig {
                 .addFilterAfter(customAuthenticationFilter, BasicAuthenticationFilter.class)
                 .addFilterAfter(new AuthenticationRedirectFilter(), CustomAuthenticationFilter.class);
 
+        http.removeConfigurer(LogoutConfigurer.class);
+        
         return http.build();
     }
 

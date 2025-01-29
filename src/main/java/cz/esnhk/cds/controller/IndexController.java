@@ -3,6 +3,7 @@ package cz.esnhk.cds.controller;
 import cz.esnhk.cds.security.model.artemis_responses.AuthResponse;
 import cz.esnhk.cds.security.AuthenticationService;
 import cz.esnhk.cds.security.AuthorizationService;
+import cz.esnhk.cds.util.TokenHandler;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,12 +27,7 @@ public class IndexController {
     }
 
     @GetMapping("/login")
-    public String login(HttpServletRequest request, HttpServletResponse response) {
-        if (request.getParameterMap().containsKey("logout")) {
-            Cookie cookie = new Cookie(TOKEN_COOKIE, "");
-            cookie.setMaxAge(0);
-            response.addCookie(cookie);
-        }
+    public String login() {
         return "login";
     }
 
@@ -48,9 +44,12 @@ public class IndexController {
     @PostMapping("/login")
     public String login(@RequestParam("email") String email, @RequestParam("password") String password, HttpServletResponse response) {
         AuthResponse user = authenticationService.authenticate(email, password);
+        String token = user.getToken();
         //TODO Authorization just checks if the user is in the group but dont add to the security context
-        if (authorizationService.authorize(user.getId(), user.getToken())) {
-            response.addCookie(new Cookie(TOKEN_COOKIE, user.getToken()));
+        if (authorizationService.authorize(user.getId(), token)) {
+            Cookie cookie = new Cookie(TOKEN_COOKIE, token);
+            cookie.setMaxAge(TokenHandler.getExpirationTime(token));
+            response.addCookie(cookie);
             return "redirect:/";
         }
         return "redirect:/login?error";

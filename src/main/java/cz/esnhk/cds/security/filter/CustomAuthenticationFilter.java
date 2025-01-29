@@ -24,8 +24,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class CustomAuthenticationFilter extends OncePerRequestFilter {
-    //TODO: Nebude se náhodou spouětět vždy i když už je užitatel přihlášený jelikož dědí z OncePerRequestFilter?
-
     public static final String TOKEN_COOKIE = "token";
     private final AuthorizationService authorizationService;
 
