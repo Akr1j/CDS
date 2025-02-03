@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.Locale;
+
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "international_students")
@@ -33,6 +35,13 @@ public class InternationalStudent extends User {
                 ", aboutMe='" + aboutMe + '\'' +
                 '}'
                 + super.toString();
+    }
+
+    public String getCountry() {
+        Locale l = new Locale("en", country);
+        country = l.getDisplayCountry(l);
+
+        return country;
     }
 
 }
