@@ -38,6 +38,7 @@ public class DummyData {
     @Transactional
     @EventListener(ApplicationReadyEvent.class)
     public void insertDummyData() {
+        /*
         System.out.println("Inserting dummy data");
         insertInternationalStudents();
         insertMembers();
@@ -47,7 +48,7 @@ public class DummyData {
         assignESNCardToInternationalStudents();
         assignESNCardToMembers();
         assignSIMCardToInternationalStudents();
-        assignSIMCardToMembers();
+        assignSIMCardToMembers();*/
     }
 
 

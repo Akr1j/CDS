@@ -1,11 +1,11 @@
 package cz.esnhk.cds.controller;
 
-import cz.esnhk.cds.security.model.artemis_responses.AuthResponse;
 import cz.esnhk.cds.security.AuthenticationService;
 import cz.esnhk.cds.security.AuthorizationService;
+import cz.esnhk.cds.security.model.artemis_responses.AuthResponse;
+import cz.esnhk.cds.service.ArtemisSynchronization;
 import cz.esnhk.cds.util.TokenHandler;
 import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,10 +20,12 @@ import static cz.esnhk.cds.security.filter.CustomAuthenticationFilter.TOKEN_COOK
 public class IndexController {
     private final AuthenticationService authenticationService;
     private final AuthorizationService authorizationService;
+    private final ArtemisSynchronization artemisSynchronization;
 
-    public IndexController(AuthenticationService authenticationService, AuthorizationService authorizationService) {
+    public IndexController(AuthenticationService authenticationService, AuthorizationService authorizationService, ArtemisSynchronization artemisSynchronization) {
         this.authenticationService = authenticationService;
         this.authorizationService = authorizationService;
+        this.artemisSynchronization = artemisSynchronization;
     }
 
     @GetMapping("/login")
@@ -45,11 +47,13 @@ public class IndexController {
     public String login(@RequestParam("email") String email, @RequestParam("password") String password, HttpServletResponse response) {
         AuthResponse user = authenticationService.authenticate(email, password);
         String token = user.getToken();
-        //TODO Authorization just checks if the user is in the group but dont add to the security context
+        //TODO Authorization now just checks if the user is in the group but dont add to the security context.
         if (authorizationService.authorize(user.getId(), token)) {
             Cookie cookie = new Cookie(TOKEN_COOKIE, token);
             cookie.setMaxAge(TokenHandler.getExpirationTime(token));
             response.addCookie(cookie);
+            //TODO: Do synchronization on separate thread / event (button)
+            artemisSynchronization.synchronizeAll(token);
             return "redirect:/";
         }
         return "redirect:/login?error";
