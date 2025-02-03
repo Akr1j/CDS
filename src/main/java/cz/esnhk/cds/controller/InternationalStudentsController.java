@@ -7,6 +7,8 @@ import cz.esnhk.cds.model.users.InternationalStudent;
 import cz.esnhk.cds.service.InternationalStudents.InternationalStudentService;
 import cz.esnhk.cds.service.card.esnCards.EsnCardService;
 import cz.esnhk.cds.service.card.simCards.SimCardService;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +22,7 @@ public class InternationalStudentsController {
 
     private final EsnCardService esnCardService;
     private final SimCardService simCardService;
-    private InternationalStudentService internationalStudentService;
+    private final InternationalStudentService internationalStudentService;
 
     public InternationalStudentsController(InternationalStudentService internationalStudentService, EsnCardService esnCardService, SimCardService simCardService) {
         this.internationalStudentService = internationalStudentService;
@@ -70,13 +72,18 @@ public class InternationalStudentsController {
         return "redirect:/";
     }
 
+    //TODO move to card controller?
     @PostMapping("intStudent/profile/{id}/assignESNcard/")
     public String addESNcard(@PathVariable long id, @RequestParam("esnCardId") long esnCardId) {
         InternationalStudent internationalStudent = internationalStudentService.getInternationalStudentById(id);
         ESNcard esnCard = esnCardService.getEsnCardById(esnCardId);
         esnCard.setDateOfIssue(new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
         esnCard.setCardStatus(CardStatusType.ISSUED);
-        if (internationalStudent != null && esnCard != null) {
+
+        SecurityContext context = SecurityContextHolder.getContext();
+        int issuerId = Integer.parseInt(context.getAuthentication().getPrincipal().toString());
+        esnCard.setIssuedBy(issuerId);
+        if (internationalStudent != null) {
             internationalStudentService.addESNcard(id, esnCard);
             return "redirect:/intStudent/profile/" + id;
         }
@@ -102,6 +109,11 @@ public class InternationalStudentsController {
         SIMCard simCard = simCardService.getSimCardById(simCardId);
         simCard.setDateOfIssue(new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
         simCard.setCardStatus(CardStatusType.ISSUED);
+
+        SecurityContext context = SecurityContextHolder.getContext();
+        int issuerId = Integer.parseInt(context.getAuthentication().getPrincipal().toString());
+        simCard.setIssuedBy(issuerId);
+
         if (internationalStudent != null) {
             internationalStudentService.assignSimCard(id, simCard);
             return "redirect:/intStudent/profile/" + id;

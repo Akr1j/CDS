@@ -3,6 +3,8 @@ package cz.esnhk.cds.controller.cards;
 import cz.esnhk.cds.model.cards.CardStatusType;
 import cz.esnhk.cds.model.cards.SIMCard;
 import cz.esnhk.cds.service.card.simCards.SimCardService;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -67,6 +69,11 @@ public class SimCardsManagementController {
 
         String formatedTodayDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
         SIMCard normalisedCard = new SIMCard(newCard.getCardNumber(), formatedTodayDate, null, CardStatusType.AVAILABLE);
+
+        SecurityContext context = SecurityContextHolder.getContext();
+        int issuerId = Integer.parseInt(context.getAuthentication().getPrincipal().toString());
+        normalisedCard.setImportedBy(issuerId);
+
         simCardService.addSimCard(normalisedCard);
         return "redirect:/SIMCards/";
     }

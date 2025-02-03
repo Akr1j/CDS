@@ -55,6 +55,7 @@
                     <td th:text="${card.cardStatus}"></td>
                     <td th:text="${card.dateOfImport}"></td>
                     <td th:text="${card.dateOfIssue ?: '-'}">-</td>
+                    <td th:text="${card.issuedBy ?: '-'}">-</td>
                 </tr>
                 </tbody>
             </table>

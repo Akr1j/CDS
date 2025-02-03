@@ -2,6 +2,8 @@ package cz.esnhk.cds.controller.cards;
 
 import cz.esnhk.cds.model.cards.ESNcard;
 import cz.esnhk.cds.service.card.esnCards.EsnCardService;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -67,6 +69,11 @@ public class EsnCardsManagementController {
         String formatedTodayDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
         //TODO: check if card number is valid / not used - ESN International
         ESNcard normalisedCard = new ESNcard(newCard.getCardNumber(), formatedTodayDate, null, newCard.getCardPrice());
+
+        SecurityContext context = SecurityContextHolder.getContext();
+        int issuerId = Integer.parseInt(context.getAuthentication().getPrincipal().toString());
+        normalisedCard.setImportedBy(issuerId);
+
         esnCardService.addEsnCard(normalisedCard);
         return "redirect:/ESNcards/";
     }

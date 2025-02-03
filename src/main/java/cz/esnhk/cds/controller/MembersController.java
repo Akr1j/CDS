@@ -7,6 +7,8 @@ import cz.esnhk.cds.model.users.Member;
 import cz.esnhk.cds.service.Members.MemberService;
 import cz.esnhk.cds.service.card.esnCards.EsnCardService;
 import cz.esnhk.cds.service.card.simCards.SimCardService;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +22,7 @@ public class MembersController {
 
     private final EsnCardService esnCardService;
     private final SimCardService simCardService;
-    private MemberService memberService;
+    private final MemberService memberService;
 
     public MembersController(MemberService memberService, EsnCardService esnCardService, SimCardService simCardService) {
         this.memberService = memberService;
@@ -77,7 +79,12 @@ public class MembersController {
         ESNcard esnCard = esnCardService.getEsnCardById(esnCardId);
         esnCard.setDateOfIssue(new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
         esnCard.setCardStatus(CardStatusType.ISSUED);
-        if (member != null && esnCard != null) {
+
+        SecurityContext context = SecurityContextHolder.getContext();
+        int issuerId = Integer.parseInt(context.getAuthentication().getPrincipal().toString());
+        esnCard.setIssuedBy(issuerId);
+
+        if (member != null) {
             memberService.addESNcard(memberId, esnCard);
             return "redirect:/members/profile/" + memberId;
         }
@@ -103,7 +110,12 @@ public class MembersController {
         SIMCard simCard = simCardService.getSimCardById(simCardId);
         simCard.setDateOfIssue(new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
         simCard.setCardStatus(CardStatusType.ISSUED);
-        if (member != null && simCard != null) {
+
+        SecurityContext context = SecurityContextHolder.getContext();
+        int issuerId = Integer.parseInt(context.getAuthentication().getPrincipal().toString());
+        simCard.setIssuedBy(issuerId);
+
+        if (member != null) {
             memberService.assignSIMCard(memberId, simCard);
             return "redirect:/members/profile/" + memberId;
         }

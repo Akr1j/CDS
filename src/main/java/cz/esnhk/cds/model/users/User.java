@@ -4,15 +4,19 @@ import cz.esnhk.cds.model.cards.ESNcard;
 import cz.esnhk.cds.model.cards.SIMCard;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @MappedSuperclass
+@Data
+@NoArgsConstructor
 public abstract class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY) //If Artemis synchronization is used, the id cant be generated
     private long id;
 
     @NotBlank
@@ -24,7 +28,9 @@ public abstract class User {
     private String email;
     private String phone;
     private String dayJoined;
+    private String dateOfBirth;
     private String faculty;
+    //TODO: Add sex, profile picture, staff, superuser, is_active, confirmed,
 
     @OneToMany
     private List<ESNcard> esnCards = new ArrayList<>();
@@ -43,87 +49,6 @@ public abstract class User {
         this.esnCards = null;
         this.simCards = null;
         this.welcomePack = false;
-    }
-
-    public User() {
-
-    }
-
-    public long getId() {
-
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getDayJoined() {
-        return dayJoined;
-    }
-
-    public void setDayJoined(String dayJoined) {
-        this.dayJoined = dayJoined;
-    }
-
-    public boolean welcomePack() {
-        return welcomePack;
-    }
-
-    public void setWelcomePack(boolean welcomePack) {
-        this.welcomePack = welcomePack;
-    }
-
-    public List<ESNcard> getEsnCards() {
-        return esnCards;
-    }
-
-    public List<SIMCard> getSimCards() {
-        return simCards;
-    }
-
-    public void setSimCards(List<SIMCard> simCards) {
-        this.simCards = simCards;
     }
 
     public boolean haveValidEsnCard() {
@@ -153,14 +78,6 @@ public abstract class User {
 
     public void addSimCard(SIMCard simCard) {
         simCards.add(simCard);
-    }
-
-    public String getFaculty() {
-        return faculty;
-    }
-
-    public void setFaculty(String faculty) {
-        this.faculty = faculty;
     }
 
     public String toString() {
