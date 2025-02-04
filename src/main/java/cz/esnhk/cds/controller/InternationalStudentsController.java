@@ -9,6 +9,8 @@ import cz.esnhk.cds.service.InternationalStudents.InternationalStudentService;
 import cz.esnhk.cds.service.card.esnCards.EsnCardService;
 import cz.esnhk.cds.service.card.simCards.SimCardService;
 import cz.esnhk.cds.service.semesters.SemesterImpl;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -17,8 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/")
@@ -53,11 +54,28 @@ public class InternationalStudentsController {
         }
 
         semesters = semesterImpl.getAllSemesters();
-        international_students = internationalStudentService.getAllInternationalStudents(selectedSemester.getId());
+
+        if (model.containsAttribute("country")) {
+            international_students = internationalStudentService.getAllInternationalStudents(selectedSemester.getId(), (String) model.getAttribute("country"));
+        } else {
+            international_students = internationalStudentService.getAllInternationalStudents(selectedSemester.getId());
+        }
+
+        List<Country> countries = new ArrayList<>();
+        Set<String> uniqueValues = new HashSet<>();
+        for (InternationalStudent international_student : international_students) {
+            String country = international_student.getCountryCode();
+            if (uniqueValues.add(country)) {
+                Country countryObj = new Country(country
+                        , international_student.getCountry());
+                countries.add(countryObj);
+            }
+        }
 
         model.addAttribute("international_students", international_students);
         model.addAttribute("semesters", semesters);
         model.addAttribute("currentSemester", selectedSemester);
+        model.addAttribute("countries", countries);
         return "international_students/international_student_list";
     }
 
@@ -147,8 +165,18 @@ public class InternationalStudentsController {
     }
 
     @PostMapping("intStudent/search")
-    public String search(@RequestParam("semester") int semester, RedirectAttributes redirectAttributes) {
+    public String search(RedirectAttributes redirectAttributes,
+                         @RequestParam("semester") int semester,
+                         @RequestParam(value = "countrySearch", required = false) String country) {
         redirectAttributes.addFlashAttribute("selectedSemester", semesterImpl.getSemesterById(semester));
+        redirectAttributes.addFlashAttribute("country", country);
         return "redirect:/";
+    }
+
+    @Data
+    @AllArgsConstructor
+    private static class Country {
+        private String code;
+        private String name;
     }
 }

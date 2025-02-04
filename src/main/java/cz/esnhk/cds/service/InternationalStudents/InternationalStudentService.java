@@ -11,6 +11,8 @@ import java.util.List;
 public interface InternationalStudentService {
     List<InternationalStudent> getAllInternationalStudents(int semester);
 
+    List<InternationalStudent> getAllInternationalStudents(int semester, String country);
+
     InternationalStudent getInternationalStudentById(long id);
 
     void addInternationalStudent(InternationalStudent internationalStudent);

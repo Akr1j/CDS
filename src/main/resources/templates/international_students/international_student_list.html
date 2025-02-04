@@ -47,8 +47,16 @@
                 </label>
 
                 <input type="text" th:name="search" th:placeholder="'Search'"/>
-                <input type="text" th:name="country" th:placeholder="'Country'"/>
+
+                <input list="countrySearchOptions" id="countrySearch" name="countrySearch" th:placeholder="'Country'">
+                <datalist id="countrySearchOptions">
+                    <option th:each="country : ${countries}"
+                            th:text="${country.name}"
+                            th:value="${country.code}">
+                </datalist>
                 <button type="submit">Search</button>
+
+
             </form>
             <button class="qr-button">QR</button>
             <a class="qr-button" href="/intStudent/add">New international student</a>

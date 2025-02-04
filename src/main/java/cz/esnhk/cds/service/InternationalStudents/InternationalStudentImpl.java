@@ -31,6 +31,11 @@ public class InternationalStudentImpl implements InternationalStudentService {
     }
 
     @Override
+    public List<InternationalStudent> getAllInternationalStudents(int semester, String country) {
+        return internationalStudentRepository.findBySemestersIdAndCountryContaining(semester, country);
+    }
+
+    @Override
     public InternationalStudent getInternationalStudentById(long id) {
         return internationalStudentRepository.findById(id).orElse(null);
     }

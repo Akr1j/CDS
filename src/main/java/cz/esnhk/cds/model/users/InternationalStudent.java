@@ -53,4 +53,8 @@ public class InternationalStudent extends User {
         return country;
     }
 
+    public String getCountryCode() {
+        return country;
+    }
+
 }
