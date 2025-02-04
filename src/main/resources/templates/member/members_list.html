@@ -36,8 +36,10 @@
         <div class="header">
             <span>Semester</span>
             <select th:name="semester">
-                <option value="2024/2025 Winter semester (Current)">2024/2025 Winter semester (Current)</option>
-                <!-- Add more options dynamically -->
+                <option th:each="semester : ${semesters}"
+                        th:text="${semester.name}"
+                        th:value="${semester.id}"
+                        th:selected="${semester.id == currentSemester.id}">
             </select>
             <input type="text" th:placeholder="'Search'"/>
             <input type="text" th:placeholder="'Faculty'"/>

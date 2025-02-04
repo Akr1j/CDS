@@ -1,5 +1,6 @@
 package cz.esnhk.cds.controller;
 
+import cz.esnhk.cds.model.Semester;
 import cz.esnhk.cds.model.cards.CardStatusType;
 import cz.esnhk.cds.model.cards.ESNcard;
 import cz.esnhk.cds.model.cards.SIMCard;
@@ -7,14 +8,17 @@ import cz.esnhk.cds.model.users.Member;
 import cz.esnhk.cds.service.Members.MemberService;
 import cz.esnhk.cds.service.card.esnCards.EsnCardService;
 import cz.esnhk.cds.service.card.simCards.SimCardService;
+import cz.esnhk.cds.service.semesters.SemesterImpl;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/members/")
@@ -23,16 +27,35 @@ public class MembersController {
     private final EsnCardService esnCardService;
     private final SimCardService simCardService;
     private final MemberService memberService;
+    private final SemesterImpl semesterImpl;
 
-    public MembersController(MemberService memberService, EsnCardService esnCardService, SimCardService simCardService) {
+    public MembersController(MemberService memberService, EsnCardService esnCardService, SimCardService simCardService, SemesterImpl semesterImpl) {
         this.memberService = memberService;
         this.esnCardService = esnCardService;
         this.simCardService = simCardService;
+        this.semesterImpl = semesterImpl;
     }
 
     @RequestMapping("/")
     public String list(Model model) {
-        model.addAttribute("members", memberService.getAllMembers());
+        Semester selectedSemester;
+        List<Semester> semesters;
+        List<Member> members;
+
+        if (model.containsAttribute("selectedSemester")) {
+            selectedSemester = (Semester) model.getAttribute("selectedSemester");
+        } else {
+            selectedSemester = new Semester();
+            selectedSemester.setId(0);
+        }
+
+        semesters = semesterImpl.getAllSemesters();
+        //Members aren't separated by semester
+        members = memberService.getAllMembers();
+
+        model.addAttribute("members", members);
+        model.addAttribute("currentSemester", selectedSemester);
+        model.addAttribute("semesters", semesters);
         return "member/members_list";
     }
 
@@ -120,5 +143,11 @@ public class MembersController {
             return "redirect:/members/profile/" + memberId;
         }
         return "redirect:/501";
+    }
+
+    @PostMapping("/search")
+    public String search(@RequestParam("semester") int semester, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("selectedSemester", semesterImpl.getSemesterById(semester));
+        return "redirect:/members/";
     }
 }
