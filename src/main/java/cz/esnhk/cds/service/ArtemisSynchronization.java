@@ -88,6 +88,8 @@ public class ArtemisSynchronization {
             //TODO
             member.setRole("");
             member.setAboutMe(user.getDescription());
+            member.setActive(user.is_active().equals("true"));
+            member.setConfirmed(user.isConfirmed());
 
             memberService.addMember(member);
         }
@@ -127,6 +129,7 @@ public class ArtemisSynchronization {
             internationalStudent.setCountry(user.getCountry());
             internationalStudent.setHomeUniversity(user.getHomeUniversity());
             internationalStudent.setAboutMe(user.getDescription());
+            internationalStudent.setActive(user.is_active().equals("true"));
 
             List<Integer> userSemesters = new ArrayList<>();
             for (int semester : user.getSemesters()) {

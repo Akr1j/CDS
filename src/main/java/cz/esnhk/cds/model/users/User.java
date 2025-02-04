@@ -30,7 +30,9 @@ public abstract class User {
     private String dayJoined;
     private String dateOfBirth;
     private String faculty;
-    //TODO: Add sex, profile picture, staff, superuser, is_active, confirmed,
+    private boolean active;
+    private boolean confirmed;
+    //TODO: Add sex, profile picture, staff, superuser
 
     @OneToMany
     private List<ESNcard> esnCards = new ArrayList<>();

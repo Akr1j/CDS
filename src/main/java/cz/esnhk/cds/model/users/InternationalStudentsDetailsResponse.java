@@ -17,7 +17,7 @@ public class InternationalStudentsDetailsResponse {
     private String dateJoined;
     private String dateOfBirth;
     private boolean emailSubscription;
-    private boolean is_active;
+    private String is_active;
     private boolean staff;
     private String profile_picture;
     private String country;
@@ -34,4 +34,8 @@ public class InternationalStudentsDetailsResponse {
     private int[] groups;
     private int[] user_permissions;
     private int[] semesters;
+
+    public String is_active() {
+        return is_active;
+    }
 }

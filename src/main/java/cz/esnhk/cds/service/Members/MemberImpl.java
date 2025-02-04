@@ -24,9 +24,10 @@ public class MemberImpl implements MemberService {
         this.simCardRepository = simCardRepository;
     }
 
+    //TODO Get only active members
     @Override
     public List<Member> getAllMembers() {
-        return membersRepository.findAll();
+        return membersRepository.findByActiveTrueAndConfirmedTrue();
     }
 
     @Override
