@@ -7,6 +7,7 @@ import cz.esnhk.cds.model.users.InternationalStudent;
 import cz.esnhk.cds.service.InternationalStudents.InternationalStudentService;
 import cz.esnhk.cds.service.card.esnCards.EsnCardService;
 import cz.esnhk.cds.service.card.simCards.SimCardService;
+import cz.esnhk.cds.service.semesters.SemesterImpl;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -23,16 +24,21 @@ public class InternationalStudentsController {
     private final EsnCardService esnCardService;
     private final SimCardService simCardService;
     private final InternationalStudentService internationalStudentService;
+    private final SemesterImpl semesterImpl;
 
-    public InternationalStudentsController(InternationalStudentService internationalStudentService, EsnCardService esnCardService, SimCardService simCardService) {
+    public InternationalStudentsController(InternationalStudentService internationalStudentService, EsnCardService esnCardService, SimCardService simCardService, SemesterImpl semesterImpl) {
         this.internationalStudentService = internationalStudentService;
         this.esnCardService = esnCardService;
         this.simCardService = simCardService;
+        this.semesterImpl = semesterImpl;
     }
 
     @RequestMapping("/")
     public String list(Model model) {
-        model.addAttribute("international_students", internationalStudentService.getAllInternationalStudents());
+        //TODO: get current semester
+        int semester = 1;
+        model.addAttribute("international_students", internationalStudentService.getAllInternationalStudents(semester));
+        model.addAttribute("semesters", semesterImpl.getAllSemesters());
         return "international_students/international_student_list";
     }
 
@@ -119,5 +125,12 @@ public class InternationalStudentsController {
             return "redirect:/intStudent/profile/" + id;
         }
         return "redirect:/501";
+    }
+
+    @PostMapping("intStudent/search")
+    public String search(@RequestParam("semester") int semester, Model model) {
+        model.addAttribute("international_students", internationalStudentService.getAllInternationalStudents(semester));
+        model.addAttribute("semesters", semesterImpl.getAllSemesters());
+        return "international_students/international_student_list";
     }
 }

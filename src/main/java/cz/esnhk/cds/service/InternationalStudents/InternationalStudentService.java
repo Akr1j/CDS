@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 public interface InternationalStudentService {
-    List<InternationalStudent> getAllInternationalStudents();
+    List<InternationalStudent> getAllInternationalStudents(int semester);
 
     InternationalStudent getInternationalStudentById(long id);
 

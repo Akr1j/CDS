@@ -1,5 +1,6 @@
 package cz.esnhk.cds.model.users;
 
+import cz.esnhk.cds.model.Semester;
 import cz.esnhk.cds.model.cards.ESNcard;
 import cz.esnhk.cds.model.cards.SIMCard;
 import jakarta.persistence.*;
@@ -7,6 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Locale;
 
 @EqualsAndHashCode(callSuper = true)
@@ -20,6 +22,13 @@ public class InternationalStudent extends User {
     private String aboutMe;
     private String homeUniversity;
 
+    @ManyToMany
+    @JoinTable(
+            name = "international_student_semester",
+            joinColumns = @JoinColumn(name = "international_student_id"),
+            inverseJoinColumns = @JoinColumn(name = "semester_id")
+    )
+    private List<Semester> semesters;
 
     //TODO verify if needed
     public InternationalStudent(long id, String name, String surname, String middleName, String email, String phone, String dayJoined, ESNcard esnCard, SIMCard simCard, boolean welcomePack, String country, String aboutMe) {

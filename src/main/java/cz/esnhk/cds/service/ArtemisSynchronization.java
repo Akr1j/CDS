@@ -1,11 +1,15 @@
 package cz.esnhk.cds.service;
 
+import cz.esnhk.cds.model.Semester;
 import cz.esnhk.cds.model.users.InternationalStudent;
 import cz.esnhk.cds.model.users.InternationalStudentsDetailsResponse;
 import cz.esnhk.cds.model.users.Member;
 import cz.esnhk.cds.security.model.artemis_responses.UserDetailsResponse;
 import cz.esnhk.cds.service.InternationalStudents.InternationalStudentService;
 import cz.esnhk.cds.service.Members.MemberService;
+import cz.esnhk.cds.service.semesters.SemesterService;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -14,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,18 +28,24 @@ public class ArtemisSynchronization {
     private final RestTemplate restTemplate;
     private final MemberService memberService;
     private final InternationalStudentService internationalStudentService;
+    private final SemesterService semesterService;
     @Value("${members.url.artemis}")
     private String membersApiUrl;
     @Value("${international-students.url.artemis}")
     private String InternationalStudentsApiUrl;
+    @Value("${semester.url.artemis}")
+    private String semestersApiUrl;
 
-    public ArtemisSynchronization(RestTemplate restTemplate, MemberService memberService, InternationalStudentService internationalStudentService) {
+    public ArtemisSynchronization(RestTemplate restTemplate, MemberService memberService, InternationalStudentService internationalStudentService, SemesterService semesterService) {
         this.restTemplate = restTemplate;
         this.memberService = memberService;
         this.internationalStudentService = internationalStudentService;
+        this.semesterService = semesterService;
     }
 
     public void synchronizeAll(String token) {
+        synchronizeSemesters(token);
+
         synchronizeMembers(token);
         synchronizeInternationalStudents(token);
     }
@@ -117,8 +128,57 @@ public class ArtemisSynchronization {
             internationalStudent.setHomeUniversity(user.getHomeUniversity());
             internationalStudent.setAboutMe(user.getDescription());
 
+            List<Integer> userSemesters = new ArrayList<>();
+            for (int semester : user.getSemesters()) {
+                userSemesters.add(semester);
+            }
+
+            List<Semester> semesters = new ArrayList<>();
+            for (Semester semester : semesterService.getAllSemesters()) {
+                if (userSemesters.contains(semester.getId())) {
+                    semesters.add(semester);
+                }
+
+            }
+            internationalStudent.setSemesters(semesters);
+
             internationalStudentService.addInternationalStudent(internationalStudent);
         }
+    }
+
+    private void synchronizeSemesters(String token) {
+        //Prepare the request
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + token); // Include the token in the header
+        HttpEntity<Void> request = new HttpEntity<>(headers);
+
+        //TODO: Change the response type to users immediately
+        //Send the request and get the response
+        ResponseEntity<SemesterResponse[]> response = restTemplate.exchange(semestersApiUrl, HttpMethod.GET, request, SemesterResponse[].class);
+
+        List<SemesterResponse> semesterList = List.of(Objects.requireNonNull(response.getBody()));
+
+        for (SemesterResponse semesterResponse : semesterList) {
+            Semester semester = new Semester();
+            semester.setId((int) semesterResponse.getId());
+            semester.setName(semesterResponse.getLabel());
+            semester.setCurrent(semesterResponse.is_current);
+            semester.setAcademicYear(semesterResponse.getYear());
+            semester.setSeason(semesterResponse.getSemester());
+
+            semesterService.addSemester(semester);
+        }
+    }
+
+    @Data
+    @NoArgsConstructor
+    private static class SemesterResponse {
+        long id;
+        //String semester_info;
+        boolean is_current;
+        String label;
+        int year;
+        String semester;
     }
 
 }

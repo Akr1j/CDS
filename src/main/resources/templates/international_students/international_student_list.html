@@ -34,14 +34,21 @@
     </menu>
     <main class="content">
         <div class="header">
-            <span>Semester</span>
-            <select th:name="semester">
-                <option value="2024/2025 Winter semester (Current)">2024/2025 Winter semester (Current)</option>
-                <!-- Add more options dynamically -->
-            </select>
-            <input type="text" th:placeholder="'Search'"/>
-            <input type="text" th:placeholder="'Country'"/>
-            <button>Search</button>
+            <form method="post" th:action="@{/intStudent/search}">
+                <label>
+                    <span>Semester</span>
+                    <select th:name="semester">
+                        <option th:each="semester : ${semesters}"
+                                th:text="${semester.name}"
+                                th:value="${semester.id}">
+                        </option>
+                    </select>
+                </label>
+
+                <input type="text" th:name="search" th:placeholder="'Search'"/>
+                <input type="text" th:name="country" th:placeholder="'Country'"/>
+                <button type="submit">Search</button>
+            </form>
             <button class="qr-button">QR</button>
             <a class="qr-button" href="/intStudent/add">New international student</a>
             <a href="/logout" class="logout">Logout</a>
