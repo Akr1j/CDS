@@ -17,6 +17,7 @@ public class Member extends User {
     //May be changed to enum / classes
     private String Role;
     //TODO unify about me with international student
+    @Column(columnDefinition = "TEXT")
     private String aboutMe;
 
     public Member(long id, String name, String surname, String middleName, String email, String phone, String dayJoined, ESNcard esnCard, SIMCard simCard, String section, String role, boolean welcomePack, String aboutMe) {

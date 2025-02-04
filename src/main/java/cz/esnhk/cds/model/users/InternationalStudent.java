@@ -19,6 +19,7 @@ import java.util.Locale;
 public class InternationalStudent extends User {
 
     private String country;
+    @Column(columnDefinition = "TEXT")
     private String aboutMe;
     private String homeUniversity;
 
