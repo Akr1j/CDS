@@ -56,7 +56,8 @@ public class InternationalStudentsController {
         semesters = semesterImpl.getAllSemesters();
 
         if (model.containsAttribute("country")) {
-            international_students = internationalStudentService.getAllInternationalStudents(selectedSemester.getId(), (String) model.getAttribute("country"));
+            String country = Objects.requireNonNull(model.getAttribute("country")).toString();
+            international_students = internationalStudentService.getAllInternationalStudents(selectedSemester.getId(), country.toUpperCase());
         } else {
             international_students = internationalStudentService.getAllInternationalStudents(selectedSemester.getId());
         }
