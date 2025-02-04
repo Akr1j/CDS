@@ -11,4 +11,8 @@ public interface SemesterService {
 
 
     void addSemester(Semester semester);
+
+    Semester getCurrentSemester();
+
+    Semester getSemesterById(int id);
 }

@@ -162,7 +162,7 @@ public class ArtemisSynchronization {
             Semester semester = new Semester();
             semester.setId((int) semesterResponse.getId());
             semester.setName(semesterResponse.getLabel());
-            semester.setCurrent(semesterResponse.is_current);
+            semester.setCurrent(semesterResponse.is_current.equals("true"));
             semester.setAcademicYear(semesterResponse.getYear());
             semester.setSeason(semesterResponse.getSemester());
 
@@ -175,7 +175,7 @@ public class ArtemisSynchronization {
     private static class SemesterResponse {
         long id;
         //String semester_info;
-        boolean is_current;
+        String is_current;
         String label;
         int year;
         String semester;

@@ -1,5 +1,6 @@
 package cz.esnhk.cds.controller;
 
+import cz.esnhk.cds.model.Semester;
 import cz.esnhk.cds.model.cards.CardStatusType;
 import cz.esnhk.cds.model.cards.ESNcard;
 import cz.esnhk.cds.model.cards.SIMCard;
@@ -13,9 +14,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/")
@@ -35,10 +38,26 @@ public class InternationalStudentsController {
 
     @RequestMapping("/")
     public String list(Model model) {
-        //TODO: get current semester
-        int semester = 1;
-        model.addAttribute("international_students", internationalStudentService.getAllInternationalStudents(semester));
-        model.addAttribute("semesters", semesterImpl.getAllSemesters());
+        Semester selectedSemester;
+        List<Semester> semesters;
+        List<InternationalStudent> international_students;
+
+        if (model.containsAttribute("selectedSemester")) {
+            selectedSemester = (Semester) model.getAttribute("selectedSemester");
+        } else {
+            selectedSemester = semesterImpl.getCurrentSemester();
+        }
+        if (selectedSemester == null) {
+            selectedSemester = new Semester();
+            selectedSemester.setId(0);
+        }
+
+        semesters = semesterImpl.getAllSemesters();
+        international_students = internationalStudentService.getAllInternationalStudents(selectedSemester.getId());
+
+        model.addAttribute("international_students", international_students);
+        model.addAttribute("semesters", semesters);
+        model.addAttribute("currentSemester", selectedSemester);
         return "international_students/international_student_list";
     }
 
@@ -128,9 +147,8 @@ public class InternationalStudentsController {
     }
 
     @PostMapping("intStudent/search")
-    public String search(@RequestParam("semester") int semester, Model model) {
-        model.addAttribute("international_students", internationalStudentService.getAllInternationalStudents(semester));
-        model.addAttribute("semesters", semesterImpl.getAllSemesters());
-        return "international_students/international_student_list";
+    public String search(@RequestParam("semester") int semester, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("selectedSemester", semesterImpl.getSemesterById(semester));
+        return "redirect:/";
     }
 }

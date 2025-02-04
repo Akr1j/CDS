@@ -12,7 +12,7 @@ public class Semester {
     @Id
     private int id;
     private String name;
-    private boolean isCurrent;
+    private boolean current;
 
     private int academicYear;
     private String season;

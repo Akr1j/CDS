@@ -40,7 +40,8 @@
                     <select th:name="semester">
                         <option th:each="semester : ${semesters}"
                                 th:text="${semester.name}"
-                                th:value="${semester.id}">
+                                th:value="${semester.id}"
+                                th:selected="${semester.id == currentSemester.id}">
                         </option>
                     </select>
                 </label>
