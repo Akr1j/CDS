@@ -6,9 +6,8 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -76,6 +75,18 @@ public class EsnCardsManagementController {
 
         esnCardService.addEsnCard(normalisedCard);
         return "redirect:/ESNcards/";
+    }
+
+    @GetMapping("/add/scanner")
+    public String showScannerPage(@ModelAttribute ESNcard newCard, Model model) {
+        model.addAttribute("newCard", new ESNcard());
+        return "scanner"; // Refers to "scanner.html" in templates/
+    }
+
+    @PostMapping("/add/scan-result")
+    public String handleScan(@ModelAttribute ESNcard newCard, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("newCard", newCard);
+        return "redirect:/ESNcards/add";
     }
 
     @RequestMapping("/edit/{id}")
