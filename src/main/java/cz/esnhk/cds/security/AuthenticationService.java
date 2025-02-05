@@ -51,11 +51,11 @@ public class AuthenticationService {
             ResponseEntity<AuthResponse> response = restTemplate.exchange(artemisUrl, HttpMethod.POST, request, AuthResponse.class);
             return response.getBody();
         } catch (HttpClientErrorException.Unauthorized e) {
-            // Handle 401 Unauthorized error
             System.out.println("Unauthorized request: " + e.getMessage());
-            throw new RuntimeException("Unauthorized access. Please check your credentials.");
+            return null;
         } catch (Exception e) {
             // Handle other exceptions
+            //TODO: Prevent from falling of the server
             System.out.println("Error occurred: " + e.getMessage());
             throw new RuntimeException("An error occurred while authenticating.");
         }

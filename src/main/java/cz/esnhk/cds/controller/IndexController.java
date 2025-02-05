@@ -46,6 +46,10 @@ public class IndexController {
     @PostMapping("/login")
     public String login(@RequestParam("email") String email, @RequestParam("password") String password, HttpServletResponse response) {
         AuthResponse user = authenticationService.authenticate(email, password);
+        if (user == null) {
+            return "redirect:/login?error";
+        }
+
         String token = user.getToken();
         //TODO Authorization now just checks if the user is in the group but dont add to the security context.
         if (authorizationService.authorize(user.getId(), token)) {
