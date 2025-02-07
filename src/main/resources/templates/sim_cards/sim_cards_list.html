@@ -8,18 +8,7 @@
 </head>
 <body>
 <div class="container">
-    <aside class="sidebar">
-        <ul>
-            <li onclick="window.location.href='/'">International Students</li>
-            <li onclick="window.location.href='/members/'">Members</li>
-            <li onclick="window.location.href='/ESNcards/'">ESNcards</li>
-            <li onclick="window.location.href='/SIMCards/'" th:classappend="${'active'}">SIM cards</li>
-            <li>Welcome Packs</li>
-            <li>Statistic</li>
-            <li>Administration</li>
-        </ul>
-    </aside>
-    <main class="content">
+    <main class="content" th:fragment="content">
         <div class="header">
             <div class="semester">
                 <label for="semester">Semester:</label>

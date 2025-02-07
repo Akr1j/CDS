@@ -9,30 +9,7 @@
 </head>
 <body>
 <div class="container">
-    <menu>
-        <li onclick="window.location.href='/'">
-            <h1>International students</h1>
-        </li>
-        <li onclick="window.location.href='/members/'">
-            <h1>Members</h1>
-        </li>
-        <li onclick="window.location.href='/ESNcards/'">
-            <h1>ESNcards</h1>
-        </li>
-        <li onclick="window.location.href='/SIMCards/'">
-            <h1>SIM cards</h1>
-        </li>
-        <li>
-            <h1>Welcome packs</h1>
-        </li>
-        <li>
-            <h1>Statistic</h1>
-        </li>
-        <li>
-            <h1>Administration</h1>
-        </li>
-    </menu>
-    <main class="content">
+    <main class="content" th:fragment="content">
         <div class="header">
             <span>Semester</span>
             <select th:name="semester">

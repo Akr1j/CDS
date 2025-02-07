@@ -56,7 +56,8 @@ public class MembersController {
         model.addAttribute("members", members);
         model.addAttribute("currentSemester", selectedSemester);
         model.addAttribute("semesters", semesters);
-        return "member/members_list";
+        model.addAttribute("contentPage", "member/members_list");
+        return "/base";
     }
 
     @GetMapping("/add")

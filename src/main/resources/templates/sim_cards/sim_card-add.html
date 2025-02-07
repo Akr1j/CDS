@@ -8,20 +8,9 @@
 </head>
 <body>
 <div class="container">
-    <aside class="sidebar">
-        <ul>
-            <li onclick="window.location.href='/'">International Students</li>
-            <li onclick="window.location.href='/members/'">Members</li>
-            <li onclick="window.location.href='/ESNcards/'">ESNcards</li>
-            <li onclick="window.location.href='/SIMCards/'" th:classappend="${'active'}">SIM cards</li>
-            <li>Welcome Packs</li>
-            <li>Statistic</li>
-            <li>Administration</li>
-        </ul>
-    </aside>
-    <main class="content">
+    <main class="content" th:fragment="content">
         <div class="header">
-            <h1>Add New ESN Card</h1>
+            <h1>Add New SIM Card</h1>
         </div>
         <form action="/SIMCards/add" method="post" th:object="${newCard}" class="form-container">
             <div class="form-group">

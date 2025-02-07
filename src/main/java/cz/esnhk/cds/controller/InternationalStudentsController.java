@@ -77,7 +77,8 @@ public class InternationalStudentsController {
         model.addAttribute("semesters", semesters);
         model.addAttribute("currentSemester", selectedSemester);
         model.addAttribute("countries", countries);
-        return "international_students/international_student_list";
+        model.addAttribute("contentPage", "international_students/international_student_list");
+        return "/base";
     }
 
     @GetMapping("/intStudent/add")
@@ -98,7 +99,8 @@ public class InternationalStudentsController {
         InternationalStudent internationalStudent = internationalStudentService.getInternationalStudentById(id);
         if (internationalStudent != null) {
             model.addAttribute("student", internationalStudent);
-            return "international_students/international_student_profile";
+            model.addAttribute("contentPage", "international_students/international_student_profile");
+            return "/base";
         }
         return "redirect:/";
     }
@@ -111,7 +113,8 @@ public class InternationalStudentsController {
             //TODO: get only ESN cards that are not assigned to any student
             model.addAttribute("esnCards", esnCardService.getAvailableEsnCards());
             model.addAttribute("esnCardId", null);
-            return "international_students/international_student_add_esn_card";
+            model.addAttribute("contentPage", "international_students/international_student_add_esn_card");
+            return "/base";
         }
         return "redirect:/";
     }
@@ -142,7 +145,8 @@ public class InternationalStudentsController {
             //TODO: get only ESN cards that are not assigned to any student
             model.addAttribute("simCards", simCardService.getAvailableSimCards());
             model.addAttribute("simCardId", null);
-            return "international_students/international_student_add_sim_card";
+            model.addAttribute("contentPage", "international_students/international_student_add_sim_card");
+            return "/base";
         }
         return "redirect:/";
     }

@@ -41,7 +41,8 @@ public class EsnCardsManagementController {
         model.addAttribute("semester", "2025/2025");
         model.addAttribute("stats", status);
         model.addAttribute("semesters", new String[]{"2021/2022", "2022/2023", "2023/2024", "2024/2025"});
-        return "esn_cards/esn_cards_list";
+        model.addAttribute("contentPage", "esn_cards/esn_cards_list");
+        return "/base";
     }
 
     @PostMapping("/find")
@@ -54,7 +55,8 @@ public class EsnCardsManagementController {
     @RequestMapping("/add")
     public String add(Model model) {
         model.addAttribute("newCard", new ESNcard());
-        return "esn_cards/esn_card-add";
+        model.addAttribute("contentPage", "esn_cards/esn_card-add");
+        return "/base";
     }
 
     @PostMapping("/add")

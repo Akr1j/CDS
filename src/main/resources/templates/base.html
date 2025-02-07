@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My App</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/main.css">
+    <link rel="stylesheet" href="/menu.css">
+    <link rel="stylesheet" href="/esncards-list.css">
+    <link rel="stylesheet" th:href="@{/profiles.css}">
+</head>
+<body>
+
+<!-- ✅ Common Menu -->
+<menu id="sidebar">
+    <ul>
+        <li><a th:href="@{/}">International Students </a></li>
+        <li><a th:href="@{/members/}">Members</a></li>
+        <li><a th:href="@{/ESNcards/}">ESNcards </a></li>
+        <li><a th:href="@{/SIMCards/}">SIM cards</a></li>
+        <li><a>Welcome Packs</a></li>
+        <li><a>Statistic</a></li>
+        <li><a>Administration</a></li>
+    </ul>
+</menu>
+
+<!-- ✅ Dynamic Content (This will change) -->
+<main th:replace="~{${contentPage} :: content}" class="content"></main>
+
+</body>
+</html>

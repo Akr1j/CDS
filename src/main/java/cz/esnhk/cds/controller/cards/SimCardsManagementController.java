@@ -43,7 +43,8 @@ public class SimCardsManagementController {
         model.addAttribute("semester", "2025/2025");
         model.addAttribute("stats", status);
         model.addAttribute("semesters", new String[]{"2021/2022", "2022/2023", "2023/2024", "2024/2025"});
-        return "sim_cards/sim_cards_list";
+        model.addAttribute("contentPage", "sim_cards/sim_cards_list");
+        return "/base";
     }
 
     @PostMapping("/find")
@@ -56,7 +57,8 @@ public class SimCardsManagementController {
     @RequestMapping("/add")
     public String add(Model model) {
         model.addAttribute("newCard", new SIMCard());
-        return "sim_cards/sim_card-add";
+        model.addAttribute("contentPage", "sim_cards/sim_card-add");
+        return "/base";
     }
 
     @PostMapping("/add")

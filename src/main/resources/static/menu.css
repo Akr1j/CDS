@@ -1,28 +1,30 @@
-menu {
-    margin: 0;
-    background-color: #d3d3d3;
-    width: 20%;
-    height: 100%;
-    min-width: 10rem;
-    max-width: 15rem;
-    list-style-type: none;
-    padding: 1rem 0;
+menu#sidebar {
+    background-color: #333;
+    color: white;
+    width: 15%;
 }
 
-menu li {
-    display: flex;
-    align-content: center;
-    justify-content: center;
-    height: 4rem;
-    margin: 1rem 0;
-    background-color: grey;
+menu#sidebar ul {
+    list-style: none;
     padding: 0;
-    align-items: center;
+    margin: 0;
 }
 
-menu li h1 {
-    font-size: 24px;
+menu#sidebar ul li {
+    padding: 1rem;
     text-align: center;
-    margin: 0;
+    cursor: pointer;
+}
 
+menu#sidebar ul li.active {
+    background-color: #666;
+}
+
+menu#sidebar ul li:hover {
+    background-color: #555;
+}
+
+menu#sidebar ul li a {
+    color: white;
+    text-decoration: none;
 }

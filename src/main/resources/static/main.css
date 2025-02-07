@@ -5,6 +5,11 @@
     font-family: Arial, sans-serif;
 }
 
+main {
+    width: 85%;
+    padding: 2rem;
+}
+
 body {
     display: flex;
     height: 100vh;
