@@ -11,18 +11,18 @@
 <div class="container">
     <main class="content" th:fragment="content">
         <div class="header">
-            <span>Semester</span>
-            <select th:name="semester">
-                <option th:each="semester : ${semesters}"
-                        th:text="${semester.name}"
-                        th:value="${semester.id}"
-                        th:selected="${semester.id == currentSemester.id}">
-            </select>
-            <input type="text" th:placeholder="'Search'"/>
-            <input type="text" th:placeholder="'Faculty'"/>
-            <button>Search</button>
-            <button class="qr-button">QR</button>
-            <a class="qr-button" href="/members/add">New member</a>
+            <form>
+                <span>Semester</span>
+                <select th:name="semester">
+                    <option th:each="semester : ${semesters}"
+                            th:text="${semester.name}"
+                            th:value="${semester.id}"
+                            th:selected="${semester.id == currentSemester.id}">
+                </select>
+                <input type="text" th:placeholder="'Search'"/>
+                <input type="text" th:placeholder="'Faculty'"/>
+                <button type="submit">Search</button>
+            </form>
         </div>
         <table>
             <thead>

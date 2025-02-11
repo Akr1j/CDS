@@ -1,3 +1,9 @@
+menu{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 menu#sidebar {
     background-color: #333;
     color: white;
@@ -27,4 +33,11 @@ menu#sidebar ul li:hover {
 menu#sidebar ul li a {
     color: white;
     text-decoration: none;
+}
+
+#logged-user{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin: 1rem;
 }
