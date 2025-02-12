@@ -41,3 +41,29 @@ menu#sidebar ul li a {
     align-content: center;
     margin: 1rem;
 }
+
+.menu-sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    gap: 1rem;
+}
+
+.menu-sidebar .menu-sidebar-item {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    padding: 1rem;
+    cursor: pointer;
+    color: white;
+    text-decoration: none;
+}
+
+.menu-sidebar-item:hover {
+    background-color: #555;
+}
+
+.menu-sidebar-item:active {
+    background-color: #666;
+}

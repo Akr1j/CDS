@@ -13,15 +13,15 @@
 
 <!-- ✅ Common Menu -->
 <menu id="sidebar">
-    <ul>
-        <li><a th:href="@{/}">International Students </a></li>
-        <li><a th:href="@{/members/}">Members</a></li>
-        <li><a th:href="@{/ESNcards/}">ESNcards </a></li>
-        <li><a th:href="@{/SIMCards/}">SIM cards</a></li>
-        <li><a>Welcome Packs</a></li>
-        <li><a>Statistic</a></li>
-        <li><a>Administration</a></li>
-    </ul>
+    <div class="menu-sidebar">
+        <a th:href="@{/}" class="menu-sidebar-item">International Students </a>
+        <a th:href="@{/members/}" class="menu-sidebar-item">Members</a>
+        <a th:href="@{/ESNcards/}" class="menu-sidebar-item">ESNcards </a>
+        <a th:href="@{/SIMCards/}" class="menu-sidebar-item">SIM cards</a>
+        <a class="menu-sidebar-item">Welcome Packs</a>
+        <a class="menu-sidebar-item">Statistic</a>
+        <a class="menu-sidebar-item">Administration</a>
+    </div>
 
     <section id="logged-user">
         <a href="/logout" class="logout">Logout</a>
