@@ -1,0 +1,32 @@
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: java
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydb
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network # Síť pro komunikaci mezi kontejnery
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "java"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  spring-boot-app:
+    image: justakr1j/cipisek:latest
+    depends_on:
+      postgres:
+        condition: service_healthy # Zajištění spuštění po inicializaci PostgreSQL
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/mydb
+      SPRING_DATASOURCE_USERNAME: java
+      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_JPA_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
+    networks:
+      - app-network
+networks:
+  app-network:

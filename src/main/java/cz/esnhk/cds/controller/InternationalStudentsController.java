@@ -78,7 +78,7 @@ public class InternationalStudentsController {
         model.addAttribute("currentSemester", selectedSemester);
         model.addAttribute("countries", countries);
         model.addAttribute("contentPage", "international_students/international_student_list");
-        return "/base";
+        return "base";
     }
 
     @GetMapping("/intStudent/add")
@@ -100,7 +100,7 @@ public class InternationalStudentsController {
         if (internationalStudent != null) {
             model.addAttribute("student", internationalStudent);
             model.addAttribute("contentPage", "international_students/international_student_profile");
-            return "/base";
+            return "base";
         }
         return "redirect:/";
     }
@@ -114,7 +114,7 @@ public class InternationalStudentsController {
             model.addAttribute("esnCards", esnCardService.getAvailableEsnCards());
             model.addAttribute("esnCardId", null);
             model.addAttribute("contentPage", "international_students/international_student_add_esn_card");
-            return "/base";
+            return "base";
         }
         return "redirect:/";
     }
@@ -146,7 +146,7 @@ public class InternationalStudentsController {
             model.addAttribute("simCards", simCardService.getAvailableSimCards());
             model.addAttribute("simCardId", null);
             model.addAttribute("contentPage", "international_students/international_student_add_sim_card");
-            return "/base";
+            return "base";
         }
         return "redirect:/";
     }
