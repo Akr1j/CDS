@@ -41,7 +41,7 @@
             <section id="personal-info">
                 <div class="profile-content">
                     <div class="profile-picture">
-                        <div class="circle"></div>
+                        <img th:src="${member.profilePicture}" alt="Profile picture">
                     </div>
                     <div class="profile-info">
                         <p>Name: <span th:text="${member.name}"></span> <span th:if="${member.middleName != null}"

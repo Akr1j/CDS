@@ -90,6 +90,7 @@ public class ArtemisSynchronization {
             member.setAboutMe(user.getDescription());
             member.setActive(user.is_active().equals("true"));
             member.setConfirmed(user.isConfirmed());
+            member.setProfilePicture(user.getProfile_picture());
 
             memberService.addMember(member);
         }
@@ -130,6 +131,7 @@ public class ArtemisSynchronization {
             internationalStudent.setHomeUniversity(user.getHomeUniversity());
             internationalStudent.setAboutMe(user.getDescription());
             internationalStudent.setActive(user.is_active().equals("true"));
+            internationalStudent.setProfilePicture(user.getProfile_picture());
 
             List<Integer> userSemesters = new ArrayList<>();
             for (int semester : user.getSemesters()) {
