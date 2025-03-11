@@ -31,6 +31,7 @@
                         <th>Card Number</th>
                         <th>Availability</th>
                         <th>Date of Import</th>
+                        <th>Imported By</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -39,6 +40,7 @@
                         <td th:text="${card.cardNumber}"></td>
                         <td th:text="${card.cardStatus}"></td>
                         <td th:text="${card.dateOfImport}"></td>
+                        <td th:text="${card.importedByName}"></td>
                         <td>
                             <form th:action="@{'/members/profile/{id}/assignESNcard/' (id=${member.id}, esnCardId=${card.id})}"
                                   method="post">

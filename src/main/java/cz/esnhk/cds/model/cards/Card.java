@@ -19,8 +19,10 @@ public class Card {
     @NotBlank
     private String dateOfImport;
     private int importedBy;
+    private String importedByName;
     private String dateOfIssue;
     private int issuedBy;
+    private String issuedByName;
 
     @ManyToOne
     @JoinColumn(name = "owner_id")

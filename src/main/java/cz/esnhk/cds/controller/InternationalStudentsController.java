@@ -5,7 +5,9 @@ import cz.esnhk.cds.model.cards.CardStatusType;
 import cz.esnhk.cds.model.cards.ESNcard;
 import cz.esnhk.cds.model.cards.SIMCard;
 import cz.esnhk.cds.model.users.InternationalStudent;
+import cz.esnhk.cds.model.users.Member;
 import cz.esnhk.cds.service.InternationalStudents.InternationalStudentService;
+import cz.esnhk.cds.service.Members.MemberService;
 import cz.esnhk.cds.service.card.esnCards.EsnCardService;
 import cz.esnhk.cds.service.card.simCards.SimCardService;
 import cz.esnhk.cds.service.semesters.SemesterImpl;
@@ -29,12 +31,14 @@ public class InternationalStudentsController {
     private final SimCardService simCardService;
     private final InternationalStudentService internationalStudentService;
     private final SemesterImpl semesterImpl;
+    private final MemberService memberService;
 
-    public InternationalStudentsController(InternationalStudentService internationalStudentService, EsnCardService esnCardService, SimCardService simCardService, SemesterImpl semesterImpl) {
+    public InternationalStudentsController(InternationalStudentService internationalStudentService, EsnCardService esnCardService, SimCardService simCardService, SemesterImpl semesterImpl, MemberService memberService) {
         this.internationalStudentService = internationalStudentService;
         this.esnCardService = esnCardService;
         this.simCardService = simCardService;
         this.semesterImpl = semesterImpl;
+        this.memberService = memberService;
     }
 
     @RequestMapping("/")
@@ -130,6 +134,10 @@ public class InternationalStudentsController {
         SecurityContext context = SecurityContextHolder.getContext();
         int issuerId = Integer.parseInt(context.getAuthentication().getPrincipal().toString());
         esnCard.setIssuedBy(issuerId);
+        Member issuer = memberService.getMemberById(issuerId);
+        esnCard.setIssuedByName(issuer.getName() + " " + issuer.getSurname());
+
+
         if (internationalStudent != null) {
             internationalStudentService.addESNcard(id, esnCard);
             return "redirect:/intStudent/profile/" + id;

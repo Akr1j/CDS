@@ -1,6 +1,8 @@
 package cz.esnhk.cds.controller.cards;
 
 import cz.esnhk.cds.model.cards.ESNcard;
+import cz.esnhk.cds.model.users.Member;
+import cz.esnhk.cds.service.Members.MemberService;
 import cz.esnhk.cds.service.card.esnCards.EsnCardService;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,9 +20,11 @@ import java.util.List;
 public class EsnCardsManagementController {
 
     private final EsnCardService esnCardService;
+    private final MemberService memberService;
 
-    public EsnCardsManagementController(EsnCardService esnCardService) {
+    public EsnCardsManagementController(EsnCardService esnCardService, MemberService memberService) {
         this.esnCardService = esnCardService;
+        this.memberService = memberService;
     }
 
     @RequestMapping("/")
@@ -74,6 +78,8 @@ public class EsnCardsManagementController {
         SecurityContext context = SecurityContextHolder.getContext();
         int issuerId = Integer.parseInt(context.getAuthentication().getPrincipal().toString());
         normalisedCard.setImportedBy(issuerId);
+        Member issuer = memberService.getMemberById(issuerId);
+        normalisedCard.setImportedByName(issuer.getName() + " " + issuer.getSurname());
 
         esnCardService.addEsnCard(normalisedCard);
         return "redirect:/ESNcards/";
