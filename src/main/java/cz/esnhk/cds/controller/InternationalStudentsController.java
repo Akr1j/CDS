@@ -62,6 +62,9 @@ public class InternationalStudentsController {
         if (model.containsAttribute("country")) {
             String country = Objects.requireNonNull(model.getAttribute("country")).toString();
             international_students = internationalStudentService.getAllInternationalStudents(selectedSemester.getId(), country.toUpperCase());
+        } else if (model.containsAttribute("nameSearch")) {
+            String name = Objects.requireNonNull(model.getAttribute("nameSearch")).toString();
+            international_students = internationalStudentService.getAllInternationalStudents(name, selectedSemester.getId());
         } else {
             international_students = internationalStudentService.getAllInternationalStudents(selectedSemester.getId());
         }
@@ -180,9 +183,13 @@ public class InternationalStudentsController {
     @PostMapping("intStudent/search")
     public String search(RedirectAttributes redirectAttributes,
                          @RequestParam("semester") int semester,
-                         @RequestParam(value = "countrySearch", required = false) String country) {
+                         @RequestParam(value = "countrySearch", required = false) String country,
+                         @RequestParam(value = "nameSearch", required = false) String name) {
         redirectAttributes.addFlashAttribute("selectedSemester", semesterImpl.getSemesterById(semester));
-        redirectAttributes.addFlashAttribute("country", country);
+        if (country != null && !country.isEmpty())
+            redirectAttributes.addFlashAttribute("country", country);
+        if (name != null && !name.isEmpty())
+            redirectAttributes.addFlashAttribute("nameSearch", name);
         return "redirect:/";
     }
 

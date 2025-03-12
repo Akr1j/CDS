@@ -20,4 +20,6 @@ public interface InternationalStudentService {
     void addESNcard(long id, ESNcard cardNumber);
 
     void assignSimCard(long id, SIMCard simCard);
+
+    List<InternationalStudent> getAllInternationalStudents(String name, int semester);
 }

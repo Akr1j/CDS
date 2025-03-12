@@ -1,6 +1,5 @@
 package cz.esnhk.cds.service.InternationalStudents;
 
-import cz.esnhk.cds.model.Semester;
 import cz.esnhk.cds.model.cards.ESNcard;
 import cz.esnhk.cds.model.cards.SIMCard;
 import cz.esnhk.cds.model.users.InternationalStudent;
@@ -66,5 +65,10 @@ public class InternationalStudentImpl implements InternationalStudentService {
             simCardRepository.save(simCard1);
             internationalStudentRepository.save(internationalStudent);
         }
+    }
+
+    @Override
+    public List<InternationalStudent> getAllInternationalStudents(String name, int semester) {
+        return internationalStudentRepository.findBySemestersIdAndNameContainingIgnoreCaseOrSurnameContainingIgnoreCase(semester, name, name);
     }
 }
